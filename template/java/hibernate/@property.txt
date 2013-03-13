@@ -1,0 +1,3 @@
+		<property name="@physicalColumnName" type="@type"
+			column="@realColumnName" not-null="@not-null" />
+

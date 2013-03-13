@@ -1,0 +1,28 @@
+	/**
+	 * java.template.set.setter.description.
+	 * 
+	 * @param @physicalColumnNameSet
+	 *            java.template.set.property.description
+	 */
+	public void set@PhysicalColumnNameSet(@setType @physicalColumnNameSet) {
+		this.@physicalColumnNameSet = @physicalColumnNameSet;
+	}
+
+	/**
+	 * java.template.set.adder.description.
+	 * 
+	 * @param @physicalColumnName
+	 *            @logicalColumnName
+	 */
+	public void add@PhysicalColumnName(@type @physicalColumnName) {
+		this.@physicalColumnNameSet.add(@physicalColumnName);
+	}
+
+	/**
+	 * java.template.set.getter.description.
+	 * 
+	 * @return java.template.set.property.description
+	 */
+	public @setType get@PhysicalColumnNameSet() {
+		return this.@physicalColumnNameSet;
+	}

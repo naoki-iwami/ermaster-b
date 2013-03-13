@@ -1,0 +1,18 @@
+	/**
+	 * java.template.setter.description.
+	 * 
+	 * @param @physicalColumnName
+	 *            @logicalColumnName
+	 */
+	public void set@PhysicalColumnName(@type @physicalColumnName) {
+		this.@physicalColumnName = @physicalColumnName;
+	}
+
+	/**
+	 * java.template.getter.description.
+	 * 
+	 * @return @logicalColumnName
+	 */
+	public @type get@PhysicalColumnName() {
+		return this.@physicalColumnName;
+	}

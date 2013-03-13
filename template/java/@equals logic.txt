@@ -1,0 +1,7 @@
+		if (@physicalColumnName == null) {
+			if (other.@physicalColumnName != null) {
+				return false;
+			}
+		} else if (!@physicalColumnName.equals(other.@physicalColumnName)) {
+			return false;
+		}

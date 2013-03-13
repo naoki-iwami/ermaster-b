@@ -1,0 +1,7 @@
+		<composite-id
+        	name="@compositeIdPropertyName"
+        	class="@compositeIdClassName">
+
+@key_properties        	
+		</composite-id>
+

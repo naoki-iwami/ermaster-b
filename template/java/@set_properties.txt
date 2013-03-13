@@ -1,0 +1,2 @@
+	/** java.template.set.property.description. */
+	private @setType @physicalColumnNameSet;

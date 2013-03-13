@@ -1,0 +1,4 @@
+		<id name="@physicalColumnName" type="@type" column="@realColumnName">
+			<generator class="@generator" />
+		</id>
+

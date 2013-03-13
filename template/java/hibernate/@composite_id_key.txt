@@ -1,0 +1,1 @@
+        	<key-property name="@physicalColumnName" type="@type" column="@realColumnName" />
