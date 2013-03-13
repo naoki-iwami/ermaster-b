@@ -1,11 +1,11 @@
-���̃v���O�����́AEclipse Plugin �� ERMaster �ɉ��ǂ����������̂ł��B
+このプログラムは、Eclipse Plugin の ERMaster に改良を加えたものです。
 
-��Ԃ̑傫�ȕύX�_�́A�_�C�A�O�����Ƃ����T�O��ǉ�����
-�e�[�u�����O���[�s���O���ĊǗ��ł���Ƃ���ł��B
-����͖{�Ƃ� ERMaster �ł͑�ʂ̃e�[�u���������Ə������d���Ȃ�Ƃ������ɑΏ��������̂ł��B
-����ɂ��A100�𒴂���e�[�u���� ERMaster �ŃX�g���X�����Ǘ��ł���悤�ɂȂ�܂����B
+一番の大きな変更点は、ダイアグラムという概念を追加して
+テーブルをグルーピングして管理できるところです。
+これは本家の ERMaster では大量のテーブルを扱うと処理が重くなるという問題に対処したものです。
+これにより、100を超えるテーブルを ERMaster でストレス無く管理できるようになりました。
 
-�g���Ƃ��́Adropins �f�B���N�g���� Eclipse �̒����ɃR�s�[���ĉ������B
+使うときは、dropins ディレクトリを Eclipse の直下にコピーして下さい。
 
 
 Naoki Iwami
