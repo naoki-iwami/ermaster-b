@@ -5,6 +5,8 @@
 これは本家の ERMaster では大量のテーブルを扱うと処理が重くなるという問題に対処したものです。
 これにより、100を超えるテーブルを ERMaster でストレス無く管理できるようになりました。
 
+使うときは、dropins ディレクトリを Eclipse の直下にコピーして下さい。
+
 
 Naoki Iwami
 https://github.com/naoki-iwami
