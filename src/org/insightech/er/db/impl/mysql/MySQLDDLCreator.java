@@ -337,15 +337,17 @@ public class MySQLDDLCreator extends DDLCreator {
 
 	@Override
 	public String getDropDDL(ERDiagram diagram) {
+		String dropDDL = super.getDropDDL(diagram);
+		if (dropDDL.isEmpty()) {
+			return dropDDL;
+		}
 		StringBuilder ddl = new StringBuilder();
 		ddl.append("SET SESSION FOREIGN_KEY_CHECKS=0");
 		if (this.semicolon) {
 			ddl.append(";");
 		}
 		ddl.append("\r\n");
-
-		ddl.append(super.getDropDDL(diagram));
-
+		ddl.append(dropDDL);
 		return ddl.toString();
 	}
 
