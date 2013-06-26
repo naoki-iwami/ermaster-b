@@ -245,10 +245,21 @@ public class MySQLDDLCreator extends DDLCreator {
 					Format.null2blank(ddlTarget.commentReplaceString));
 		}
 
-		int maxLength = 60;
+		// DB comment size has been increased since MySQL-5.5.3 like this:
+		//   table  : 60 -> 2048
+		//   column : 255 -> 1024
+		// *http://dev.mysql.com/doc/refman/5.5/en/create-table.html
+		//
+		// actual test result in Server version: 5.5.19-log MySQL Community Server (GPL)
+		//   Caused by: java.sql.SQLException: Comment for table 'member' is too long (max = 2048)
+		//   Caused by: java.sql.SQLException: Comment for field 'REGISTER_DATETIME' is too long (max = 1024)
+		//
+		// ERMaster-b is forked product
+		// so no problem basically for new version
+		int maxLength = 2048;
 
 		if (column) {
-			maxLength = 255;
+			maxLength = 1024;
 		}
 
 		if (comment.length() > maxLength) {
