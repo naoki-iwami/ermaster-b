@@ -33,11 +33,12 @@ import org.insightech.er.ResourceString;
 import org.insightech.er.editor.model.ViewableModel;
 import org.insightech.er.editor.view.action.dbexport.ExportToDBAction;
 import org.insightech.er.editor.view.action.dbexport.ExportToDBAction.ExportToDBRetargetAction;
+import org.insightech.er.editor.view.action.dbexport.ExportToDDLAction;
 import org.insightech.er.editor.view.action.edit.ChangeBackgroundColorAction;
 import org.insightech.er.editor.view.action.edit.ChangeBackgroundColorAction.ChangeBackgroundColorRetargetAction;
 import org.insightech.er.editor.view.action.line.HorizontalLineAction;
-import org.insightech.er.editor.view.action.line.VerticalLineAction;
 import org.insightech.er.editor.view.action.line.HorizontalLineAction.HorizontalLineRetargetAction;
+import org.insightech.er.editor.view.action.line.VerticalLineAction;
 import org.insightech.er.editor.view.action.line.VerticalLineAction.VerticalLineRetargetAction;
 import org.insightech.er.editor.view.action.option.notation.LockEditAction;
 import org.insightech.er.editor.view.action.option.notation.ToggleMainColumnAction;
@@ -102,6 +103,12 @@ public class ERDiagramActionBarContributor extends ActionBarContributor {
 				IAction.AS_CHECK_BOX);
 		toggleMainColumnAction.setImageDescriptor(Activator.getImageDescriptor(ImageKey.MAIN_COLUMN));
 		this.addRetargetAction(toggleMainColumnAction);
+
+		RetargetAction exportDdlAction = new RetargetAction(ExportToDDLAction.ID,
+				ResourceString.getResourceString("dialog.title.export.ddl"),
+				IAction.AS_CHECK_BOX);
+		exportDdlAction.setImageDescriptor(Activator.getImageDescriptor(ImageKey.EXPORT_DDL));
+		this.addRetargetAction(exportDdlAction);
 
 		RetargetAction lockEditAction = new RetargetAction(LockEditAction.ID,
 				ResourceString.getResourceString("action.title.lock.edit"),
@@ -193,6 +200,7 @@ public class ERDiagramActionBarContributor extends ActionBarContributor {
 
 		toolBarManager.add(new Separator());
 
+		toolBarManager.add(this.getAction(ExportToDDLAction.ID));
 		toolBarManager.add(this.getAction(ExportToDBAction.ID));
 
 		toolBarManager.add(new Separator());

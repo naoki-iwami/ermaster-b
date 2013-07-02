@@ -2,6 +2,7 @@ package org.insightech.er;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.FigureCanvas;
@@ -18,6 +19,7 @@ import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -216,32 +218,32 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½wï¿½è‚³ï¿½ê‚½ï¿½Lï¿½[ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ {@link Image} ï¿½ï¿½Ô‚ï¿½ï¿½Ü‚ï¿½
+	 * w’è‚³‚ê‚½ƒL[‚É‘Î‰‚·‚é {@link Image} ‚ğ•Ô‚µ‚Ü‚·
 	 *
 	 * @param key
-	 *            {@link ImageKey} ï¿½Å’ï¿½`ï¿½ï¿½ï¿½ê‚½ï¿½Lï¿½[
-	 * @return ï¿½wï¿½è‚³ï¿½ê‚½ï¿½Lï¿½[ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ {@link Image}
+	 *            {@link ImageKey} ‚Å’è‹`‚³‚ê‚½ƒL[
+	 * @return w’è‚³‚ê‚½ƒL[‚É‘Î‰‚·‚é {@link Image}
 	 */
 	public static Image getImage(String key) {
 		return getDefault().getImageRegistry().get(key);
 	}
 
 	/**
-	 * ï¿½wï¿½è‚³ï¿½ê‚½ï¿½Lï¿½[ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ {@link ImageDescriptor} ï¿½ï¿½Ô‚ï¿½ï¿½Ü‚ï¿½
+	 * w’è‚³‚ê‚½ƒL[‚É‘Î‰‚·‚é {@link ImageDescriptor} ‚ğ•Ô‚µ‚Ü‚·
 	 *
 	 * @param key
-	 *            {@link ImageKey} ï¿½Å’ï¿½`ï¿½ï¿½ï¿½ê‚½ï¿½Lï¿½[
-	 * @return ï¿½wï¿½è‚³ï¿½ê‚½ï¿½Lï¿½[ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ {@link ImageDescriptor}
+	 *            {@link ImageKey} ‚Å’è‹`‚³‚ê‚½ƒL[
+	 * @return w’è‚³‚ê‚½ƒL[‚É‘Î‰‚·‚é {@link ImageDescriptor}
 	 */
 	public static ImageDescriptor getImageDescriptor(String key) {
 		return getDefault().getImageRegistry().getDescriptor(key);
 	}
 
 	/**
-	 * ï¿½wï¿½è‚³ï¿½ê‚½ï¿½ï¿½Oï¿½Ì—ï¿½Oï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+	 * w’è‚³‚ê‚½—áŠO‚Ì—áŠOƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·B
 	 *
 	 * @param e
-	 *            ï¿½ï¿½O
+	 *            —áŠO
 	 */
 	public static void showExceptionDialog(Throwable e) {
 		IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e
@@ -256,10 +258,10 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½wï¿½è‚³ï¿½ê‚½ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ÌƒGï¿½ï¿½ï¿½[ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+	 * w’è‚³‚ê‚½ƒƒbƒZ[ƒW‚ÌƒGƒ‰[ƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·B
 	 *
 	 * @param message
-	 *            ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
+	 *            ƒGƒ‰[ƒƒbƒZ[ƒW
 	 */
 	public static void showErrorDialog(String message) {
 		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
@@ -271,10 +273,10 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+	 * ƒƒbƒZ[ƒWƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·B
 	 *
 	 * @param message
-	 *            ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
+	 *            ƒƒbƒZ[ƒW
 	 */
 	public static void showMessageDialog(String message) {
 		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
@@ -288,10 +290,10 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½mï¿½Fï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+	 * Šm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·B
 	 *
 	 * @param message
-	 *            ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
+	 *            ƒƒbƒZ[ƒW
 	 */
 	public static boolean showConfirmDialog(String message) {
 		return showConfirmDialog(message, SWT.OK, SWT.CANCEL);
@@ -299,10 +301,10 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½mï¿½Fï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+	 * Šm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·B
 	 *
 	 * @param message
-	 *            ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
+	 *            ƒƒbƒZ[ƒW
 	 */
 	public static boolean showConfirmDialog(String message, int ok, int cancel) {
 		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
@@ -321,13 +323,13 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * ï¿½Û‘ï¿½ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+	 * •Û‘¶ƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·
 	 *
 	 * @param filePath
-	 *            ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½pï¿½X
+	 *            ƒfƒtƒHƒ‹ƒg‚Ìƒtƒ@ƒCƒ‹ƒpƒX
 	 * @param filterExtensions
-	 *            ï¿½gï¿½ï¿½ï¿½q
-	 * @return ï¿½Û‘ï¿½ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½Å‘Iï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒpï¿½X
+	 *            Šg’£q
+	 * @return •Û‘¶ƒ_ƒCƒAƒƒO‚Å‘I‘ğ‚³‚ê‚½ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 	 */
 	public static String showSaveDialog(String filePath,
 			String[] filterExtensions) {
@@ -352,12 +354,33 @@ public class Activator extends AbstractUIPlugin {
 		return fileDialog.open();
 	}
 
+	public static String showSaveDialogInternal(String filePath,
+			String[] filterExtensions) {
+		String dir = null;
+		String fileName = null;
+
+		if (filePath != null && !"".equals(filePath.trim())) {
+			File file = new File(filePath.trim());
+
+			dir = file.getParent();
+			fileName = file.getName();
+		}
+
+		InternalFileDialog fileDialog = new InternalFileDialog(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(), filePath);
+		if (fileDialog.open() == Window.OK) {
+			IPath path = fileDialog.getResourcePath();
+			return path.toString();
+		}
+		return null;
+	}
+
 	/**
-	 * ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+	 * ƒfƒBƒŒƒNƒgƒŠ‘I‘ğƒ_ƒCƒAƒƒO‚ğ•\¦‚µ‚Ü‚·
 	 *
 	 * @param filePath
-	 *            ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½pï¿½X
-	 * @return ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½Oï¿½Å‘Iï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Ìƒpï¿½X
+	 *            ƒfƒtƒHƒ‹ƒg‚Ìƒtƒ@ƒCƒ‹ƒpƒX
+	 * @return ƒfƒBƒŒƒNƒgƒŠ‘I‘ğƒ_ƒCƒAƒƒO‚Å‘I‘ğ‚³‚ê‚½ƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX
 	 */
 	public static String showDirectoryDialog(String filePath) {
 		String fileName = null;

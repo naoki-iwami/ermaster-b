@@ -41,7 +41,9 @@ public class FileText {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String saveFilePath = Activator.showSaveDialog(text.getText(),
+//				String saveFilePath = Activator.showSaveDialog(text.getText(),
+//						FileText.this.filterExtensions);
+				String saveFilePath = Activator.showSaveDialogInternal(text.getText(),
 						FileText.this.filterExtensions);
 				text.setText(saveFilePath);
 			}

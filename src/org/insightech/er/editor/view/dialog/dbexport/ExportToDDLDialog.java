@@ -12,7 +12,11 @@ import java.util.List;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -421,6 +425,8 @@ public class ExportToDDLDialog extends AbstractDialog {
 
 		PrintWriter out = null;
 
+		IFile file = null;
+
 		try {
 			DDLCreator ddlCreator = DBManagerFactory.getDBManager(this.diagram)
 					.getDDLCreator(this.diagram, true);
@@ -432,8 +438,13 @@ public class ExportToDDLDialog extends AbstractDialog {
 
 			ddlCreator.init(environment, ddlTarget);
 
+			file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(saveFilePath));
+			String absoluteFilePath = file.getLocation().toString();
+
 			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(saveFilePath), getEncoding())));
+					new FileOutputStream(absoluteFilePath), getEncoding())));
+
+			file.refreshLocal(IResource.DEPTH_ZERO, new NullProgressMonitor());
 
 			out.println(ddlCreator.getDropDDL(this.diagram));
 			out.println(ddlCreator.getCreateDDL(this.diagram));
@@ -451,15 +462,10 @@ public class ExportToDDLDialog extends AbstractDialog {
 			}
 		}
 
-		if (openAfterSaved) {
+		if (openAfterSaved && file != null) {
 			try {
-				File fileToOpen = new File(saveFilePath);
-				URI uri = URIUtil.fromString(fileToOpen.toURL().toString());
-
-				IWorkbenchPage page = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
-				IFileStore fileStore = EFS.getStore(uri);
-				IDE.openEditorOnFileStore(page, fileStore);
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				IDE.openEditor(page, file);
 
 			} catch (Exception e) {
 				Activator.showExceptionDialog(e);
@@ -570,7 +576,7 @@ public class ExportToDDLDialog extends AbstractDialog {
 
 	/**
 	 * Get DDL file encoding.
-	 * 
+	 *
 	 * @return
 	 * @throws CoreException
 	 */
