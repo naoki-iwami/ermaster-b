@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.tools.PanningSelectionTool;
 import org.eclipse.swt.SWT;
@@ -16,6 +18,7 @@ import org.insightech.er.editor.controller.editpart.element.node.NodeElementEdit
 import org.insightech.er.editor.controller.editpart.element.node.NoteEditPart;
 import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.node.NodeElement;
+import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModel;
 
 public class MovablePanningSelectionTool extends PanningSelectionTool {
 
@@ -55,9 +58,19 @@ public class MovablePanningSelectionTool extends PanningSelectionTool {
 			dy = -1;
 		}
 
+		NodeElementEditPart targetEditPart = null;
+
 		Object model = this.getCurrentViewer().getContents().getModel();
+
+		ERDiagram diagram = null;
+		if (model instanceof ERModel) {
+			diagram = ((ERModel) model).getDiagram();
+		}
 		if (model instanceof ERDiagram) {
-			ERDiagram diagram = (ERDiagram) model;
+			diagram = (ERDiagram) model;
+		}
+
+		if (diagram != null) {
 
 			List selectedObject = this.getCurrentViewer().getSelectedEditParts();
 			if (!selectedObject.isEmpty()) {
@@ -69,6 +82,7 @@ public class MovablePanningSelectionTool extends PanningSelectionTool {
 					if (object instanceof ERTableEditPart
 							|| object instanceof NoteEditPart) {
 						NodeElementEditPart editPart = (NodeElementEditPart) object;
+						targetEditPart = editPart;
 
 						NodeElement nodeElement = (NodeElement) editPart.getModel();
 
@@ -87,6 +101,13 @@ public class MovablePanningSelectionTool extends PanningSelectionTool {
 			}
 		}
 
+
+		if (event.keyCode == SWT.CR && targetEditPart != null) {
+			Request request = new Request();
+			request.setType(RequestConstants.REQ_OPEN);
+			targetEditPart.performRequest(request);
+		}
+
 		return super.handleKeyDown(event);
 	}
 
@@ -101,7 +122,7 @@ public class MovablePanningSelectionTool extends PanningSelectionTool {
 
 			editPart.getFigure().translateToRelative(diagram.mousePoint);
 		}
-		
+
 		super.mouseDown(e, viewer);
 	}
 

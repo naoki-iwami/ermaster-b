@@ -27,7 +27,7 @@ import org.insightech.er.editor.view.outline.ERDiagramOutlinePopupMenuManager;
 /**
  * TODO ON UPDATE、ON DELETE のプルダウンを設定できるものだけに制限する<br>
  * TODO デフォルト値に型の制限を適用する<br>
- * 
+ *
  */
 public class EROneDiagramEditor extends ERDiagramEditor {
 
@@ -40,7 +40,7 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 		super(diagram, editPartFactory, zoomComboContributionItem, outlinePage);
 		this.model = model;
 	}
-	
+
 	@Override
 	protected void createActions() {
 		super.createActions();
@@ -53,12 +53,12 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 						new PlaceTableAction(this),
 						new VGroupManageAction(this),
 				}));
-		
+
 		for (IAction action : actionList) {
 			registry.registerAction(action);
 		}
 	}
-	
+
 	@Override
 	protected void initializeGraphicalViewer() {
 		GraphicalViewer viewer = this.getGraphicalViewer();
@@ -78,7 +78,7 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 		this.extensionLoader.addERDiagramPopupMenu(menuMgr, this.getActionRegistry());
 
 		viewer.setContextMenu(menuMgr);
-		
+
 		viewer.setContents(model);
 //		viewer.getRootEditPart().setContents(editPartFactory.);
 
@@ -88,7 +88,7 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 
 		this.gotoMaker = new ERDiagramGotoMarker(this);
 	}
-	
+
 	/**
 	 * modelを取得します。
 	 * @return model
@@ -107,5 +107,5 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 		model.changeAll();
 	}
 
-	
+
 }

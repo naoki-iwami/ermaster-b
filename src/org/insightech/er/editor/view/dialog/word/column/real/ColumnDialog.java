@@ -44,6 +44,7 @@ public class ColumnDialog extends AbstractRealColumnDialog {
 
 	protected Button autoIncrementSettingButton;
 
+
 	public ColumnDialog(Shell parentShell, ERTable erTable) {
 		super(parentShell, erTable.getDiagram());
 
@@ -414,5 +415,6 @@ public class ColumnDialog extends AbstractRealColumnDialog {
 			this.autoIncrementSetting = new Sequence();
 		}
 	}
+
 
 }

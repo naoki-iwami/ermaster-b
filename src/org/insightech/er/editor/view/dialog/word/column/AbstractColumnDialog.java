@@ -287,4 +287,5 @@ public abstract class AbstractColumnDialog extends AbstractWordDialog {
 		});
 	}
 
+
 }

@@ -125,7 +125,7 @@ import org.insightech.er.extention.ExtensionLoader;
 /**
  * TODO ON UPDATE、ON DELETE のプルダウンを設定できるものだけに制限する<br>
  * TODO デフォルト値に型の制限を適用する<br>
- * 
+ *
  */
 public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
@@ -153,7 +153,7 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
 	/**
 	 * コンストラクタ.
-	 * 
+	 *
 	 * @param diagram
 	 *            ERDiagram
 	 * @param editPartFactory
@@ -310,7 +310,7 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 		}
 		super.setFocus();
 	}
-	
+
 	public void removeSelection() {
 		this.getSelectionSynchronizer().removeViewer(
 				this.outlinePage.getViewer());
@@ -467,7 +467,7 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
 		// action = new ToggleRulerVisibilityAction(viewer);
 		// this.getActionRegistry().registerAction(action);
-		//		
+		//
 		// action = new ToggleSnapToGeometryAction(viewer);
 		// this.getActionRegistry().registerAction(action);
 	}

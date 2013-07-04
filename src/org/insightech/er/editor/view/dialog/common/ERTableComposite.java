@@ -1,26 +1,17 @@
 package org.insightech.er.editor.view.dialog.common;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DragSourceAdapter;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.TransferData;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -105,6 +96,7 @@ public class ERTableComposite extends Composite {
 		this(holder, parent, diagram, erTable, columnList, columnDialog,
 				parentDialog, horizontalSpan, buttonDisplay, checkboxEnabled,
 				DEFAULT_HEIGHT);
+
 	}
 
 	public ERTableComposite(ERTableCompositeHolder holder, Composite parent,
@@ -149,7 +141,7 @@ public class ERTableComposite extends Composite {
 	}
 
 //	private TableItem[] currentItems = null;
-	
+
 	private void createTable() {
 		this.table = CompositeFactory.createTable(this, this.height, 3);
 
@@ -184,7 +176,22 @@ public class ERTableComposite extends Composite {
 				}
 			}
 		});
-		
+
+
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == 'a') {
+					Column targetColumn = getTargetColumn();
+					if (targetColumn == null
+							|| !(targetColumn instanceof CopyColumn)) {
+						return;
+					}
+					addOrEditColumn((CopyColumn) targetColumn, false);
+				}
+			}
+		});
+
 //		tableViewer = new TableViewer(table);
 //		tableViewer.setContentProvider(new ArrayContentProvider());
 //
@@ -266,7 +273,7 @@ public class ERTableComposite extends Composite {
 
 	/**
 	 * This method initializes composite2
-	 * 
+	 *
 	 */
 	private void createButton() {
 		GridLayout gridLayout = new GridLayout();
@@ -551,7 +558,7 @@ public class ERTableComposite extends Composite {
 	 * �ｽiCopyWord �ｽ�ｽ original �ｽ�ｽ �ｽ�ｽ�ｽ[�ｽh�ｽ�ｽI�ｽ箏ゑｿｽ�ｽ鼾�ｿｽﾍ、�ｽ�ｽ�ｽﾌイ�ｽ�ｽ�ｽX�ｽ^�ｽ�ｽ�ｽX
 	 *  �ｽI�ｽ箏なゑｿｽ�ｽB�ｽ�ｽ鼾�ｿｽﾍ、�ｽV�ｽ�ｽ�ｽ�ｽ�ｽC�ｽ�ｽ�ｽX�ｽ^�ｽ�ｽ�ｽX�ｽj
 	 * </pre>
-	 * 
+	 *
 	 * @param column
 	 * @param add
 	 */
@@ -719,6 +726,14 @@ public class ERTableComposite extends Composite {
 			NormalColumn column = this.columnDialog.getColumn();
 			addTableData(column, add);
 		}
+	}
+
+	/**
+	 * tableを取得します。
+	 * @return table
+	 */
+	public Table getTable() {
+	    return table;
 	}
 
 	public void setColumnList(List<Column> columnList) {

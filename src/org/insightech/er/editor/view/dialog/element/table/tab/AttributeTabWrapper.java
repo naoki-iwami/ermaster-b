@@ -115,8 +115,10 @@ public class AttributeTabWrapper extends ValidatableTabWrapper implements
 	}
 
 	private void initTable(Composite parent) {
-		ColumnDialog columnDialog = new ColumnDialog(PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getShell(), this.copyData);
+
+		ColumnDialog columnDialog = new ColumnDialog(getShell(), this.copyData);
+//		ColumnDialog columnDialog = new ColumnDialog(PlatformUI.getWorkbench()
+//				.getActiveWorkbenchWindow().getShell(), this.copyData);
 
 		this.tableComposite = new ERTableComposite(this, parent, this.copyData
 				.getDiagram(), this.copyData, this.copyData.getColumns(),
@@ -202,7 +204,7 @@ public class AttributeTabWrapper extends ValidatableTabWrapper implements
 
 	/**
 	 * This method initializes combo
-	 * 
+	 *
 	 */
 	private void createGroupCombo(Composite parent) {
 		GridData gridData = new GridData();
@@ -257,7 +259,7 @@ public class AttributeTabWrapper extends ValidatableTabWrapper implements
 
 	/**
 	 * This method initializes group
-	 * 
+	 *
 	 */
 	private void createGroup(Composite parent) {
 		GridData gridData1 = new GridData();
@@ -270,7 +272,7 @@ public class AttributeTabWrapper extends ValidatableTabWrapper implements
 		// FormToolkit toolkit = new FormToolkit(this.getDisplay());
 		// Form root = toolkit.createForm(parent);
 		// root.getBody().setLayout(new GridLayout());
-		//		
+		//
 		// ExpandableComposite expandableComposite = toolkit
 		// .createExpandableComposite(root.getBody(),
 		// ExpandableComposite.TWISTIE);

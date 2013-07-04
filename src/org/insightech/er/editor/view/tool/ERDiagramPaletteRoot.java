@@ -29,10 +29,8 @@ public class ERDiagramPaletteRoot extends PaletteRoot {
 		PanningSelectionToolEntry selectionToolEntry = new PanningSelectionToolEntry(
 				ResourceString.getResourceString("label.select"));
 		selectionToolEntry.setToolClass(MovablePanningSelectionTool.class);
-		selectionToolEntry.setLargeIcon(Activator
-				.getImageDescriptor(ImageKey.ARROW));
-		selectionToolEntry.setSmallIcon(Activator
-				.getImageDescriptor(ImageKey.ARROW));
+		selectionToolEntry.setLargeIcon(Activator.getImageDescriptor(ImageKey.ARROW));
+		selectionToolEntry.setSmallIcon(Activator.getImageDescriptor(ImageKey.ARROW));
 
 		group.add(selectionToolEntry);
 		// group.add(new MarqueeToolEntry());
