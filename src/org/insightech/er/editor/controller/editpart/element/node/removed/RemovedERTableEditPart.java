@@ -27,7 +27,7 @@ public class RemovedERTableEditPart extends RemovedNodeElementEditPart
 		ERDiagram diagram = this.getDiagram();
 		Settings settings = diagram.getDiagramContents().getSettings();
 
-		TableFigure figure = new TableFigure(settings.getTableStyle());
+		TableFigure figure = new TableFigure(settings);
 
 		this.changeFont(figure);
 
@@ -78,7 +78,7 @@ public class RemovedERTableEditPart extends RemovedNodeElementEditPart
 	@Override
 	public void changeSettings(Settings settings) {
 		TableFigure figure = (TableFigure) this.getFigure();
-		figure.setTableStyle(settings.getTableStyle());
+		figure.setSettings(settings);
 
 		super.changeSettings(settings);
 	}

@@ -8,6 +8,7 @@ import org.eclipse.draw2d.TitleBarBorder;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Font;
+import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.IndexFigure;
 import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.editor.view.figure.table.column.NormalColumnFigure;
@@ -19,8 +20,8 @@ public class FrameStyleSupport extends AbstractStyleSupport {
 
 	private TitleBarBorder titleBarBorder;
 
-	public FrameStyleSupport(TableFigure tableFigure) {
-		super(tableFigure);
+	public FrameStyleSupport(TableFigure tableFigure, Settings settings) {
+		super(tableFigure, settings);
 	}
 
 	/**
@@ -112,6 +113,6 @@ public class FrameStyleSupport extends AbstractStyleSupport {
 
 	public void addIndex(IndexFigure indexFigure, String name, boolean isFirst) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

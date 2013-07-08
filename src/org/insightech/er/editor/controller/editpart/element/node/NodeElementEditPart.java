@@ -1,6 +1,7 @@
 package org.insightech.er.editor.controller.editpart.element.node;
 
 import java.beans.PropertyChangeEvent;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
@@ -37,12 +38,14 @@ import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTabl
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.model.tracking.ChangeTrackingList;
 import org.insightech.er.editor.view.figure.connection.ERDiagramConnection;
+import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.util.Check;
 
 public abstract class NodeElementEditPart extends AbstractModelEditPart
 		implements NodeEditPart, DeleteableEditPart {
 
 	private Font font;
+	private Font largeFont;
 
 	/**
 	 * {@inheritDoc}
@@ -76,7 +79,7 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
 //			} else {
 //				refreshVisuals();
 //			}
-//			
+//
 
 		} else if (event.getPropertyName().equals(NodeElement.PROPERTY_CHANGE_INCOMING)) {
 			refreshTargetConnections();
@@ -85,7 +88,7 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
 			refreshSourceConnections();
 		}
 	}
-	
+
 	public NodeElement getNodeModel() {
 		return (NodeElement) super.getModel();
 	}
@@ -131,10 +134,17 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
 			nodeElement.setFontSize(fontSize);
 		}
 
-		this.font = new Font(Display.getCurrent(), fontName, fontSize,
-				SWT.NORMAL);
+		this.font = new Font(Display.getCurrent(), fontName, fontSize, SWT.NORMAL);
+
+		if (getDiagram().getDiagramContents().getSettings().getTitleFontEm() != null) {
+			int largeFontSize = getDiagram().getDiagramContents().getSettings().getTitleFontEm().multiply(new BigDecimal(nodeElement.getFontSize())).intValue();
+			this.largeFont = new Font(Display.getCurrent(), fontName, largeFontSize, SWT.NORMAL);
+		}
 
 		figure.setFont(this.font);
+		if (figure instanceof TableFigure) {
+			((TableFigure)figure).setLargeFont(this.largeFont);
+		}
 
 		return font;
 	}

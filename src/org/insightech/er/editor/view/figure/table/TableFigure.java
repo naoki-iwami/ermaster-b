@@ -9,6 +9,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.insightech.er.ImageKey;
+import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToFrameAction;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToSimpleAction;
 import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
@@ -26,22 +27,25 @@ public class TableFigure extends RoundedRectangle {
 
 	private Color foregroundColor;
 
-	public TableFigure(String tableStyle) {
+	private Font largeFont;
+
+	public TableFigure(Settings settings) {
 		this.columns = new Figure();
 		this.setLayoutManager(new BorderLayout());
-		this.setTableStyle(tableStyle);
+		this.setSettings(settings);
 	}
 
-	public void setTableStyle(String tableStyle) {
+	public void setSettings(Settings settings) {
 //		System.out.println("TableFigure::setTableStyle " + tableStyle);
+		String tableStyle = settings.getTableStyle();
 		if (ChangeDesignToSimpleAction.TYPE.equals(tableStyle)) {
-			this.styleSupport = new SimpleStyleSupport(this);
+			this.styleSupport = new SimpleStyleSupport(this, settings);
 
 		} else if (ChangeDesignToFrameAction.TYPE.equals(tableStyle)) {
-			this.styleSupport = new FrameStyleSupport(this);
+			this.styleSupport = new FrameStyleSupport(this, settings);
 
 		} else {
-			this.styleSupport = new FunnyStyleSupport(this);
+			this.styleSupport = new FunnyStyleSupport(this, settings);
 		}
 
 		this.styleSupport.init();
@@ -156,4 +160,17 @@ public class TableFigure extends RoundedRectangle {
 	public String getImageKey() {
 		return ImageKey.TABLE;
 	}
+
+	public void setLargeFont(Font largeFont) {
+		this.largeFont = largeFont;
+	}
+
+	/**
+	 * largeFontÇéÊìæÇµÇ‹Ç∑ÅB
+	 * @return largeFont
+	 */
+	public Font getLargeFont() {
+	    return largeFont;
+	}
+
 }

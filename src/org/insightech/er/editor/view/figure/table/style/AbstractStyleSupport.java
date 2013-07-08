@@ -11,6 +11,7 @@ import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.insightech.er.Resources;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
@@ -18,10 +19,12 @@ import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
 public abstract class AbstractStyleSupport implements StyleSupport {
 
 	private TableFigure tableFigure;
+	private Settings settings;
 
-	public AbstractStyleSupport(TableFigure tableFigure) {
+	public AbstractStyleSupport(TableFigure tableFigure, Settings settings) {
 		super();
 		this.tableFigure = tableFigure;
+		this.settings = settings;
 	}
 
 	public void init() {
@@ -162,5 +165,13 @@ public abstract class AbstractStyleSupport implements StyleSupport {
 		label.setText(text.toString());
 
 		columnFigure.add(label);
+	}
+
+	/**
+	 * settingsÇéÊìæÇµÇ‹Ç∑ÅB
+	 * @return settings
+	 */
+	public Settings getSettings() {
+	    return settings;
 	}
 }

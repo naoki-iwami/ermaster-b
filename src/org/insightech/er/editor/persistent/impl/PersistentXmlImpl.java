@@ -175,7 +175,7 @@ public class PersistentXmlImpl extends Persistent {
 					environmentCount));
 			environmentCount++;
 		}
-		
+
 		int virtualModelCount = 0;
 		for (ERModel model : diagramContents.getModelSet()) {
 			context.ermodelMap.put(model, new Integer(virtualModelCount));
@@ -248,13 +248,13 @@ public class PersistentXmlImpl extends Persistent {
 		if (diagram.getCurrentErmodel() != null) {
 			xml.append("\t<current_ermodel>").append(diagram.getCurrentErmodel().getName()).append("</current_ermodel>\n");
 		}
-		
+
 		xml.append("\t<zoom>").append(diagram.getZoom()).append("</zoom>\n");
 		xml.append("\t<x>").append(diagram.getX()).append("</x>\n");
 		xml.append("\t<y>").append(diagram.getY()).append("</y>\n");
 
 		appendColor(xml, "default_color", diagram.getDefaultColor());
-		
+
 		xml.append(tab(this.createXMLColor(diagram.getColor())));
 		xml.append("\t<font_name>").append(escape(diagram.getFontName()))
 				.append("</font_name>\n");
@@ -667,6 +667,8 @@ public class PersistentXmlImpl extends Persistent {
 		xml.append("\t<suspend_validator>")
 				.append(settings.isSuspendValidator())
 				.append("</suspend_validator>\n");
+		xml.append("\t<titleFontEm>").append(settings.getTitleFontEm().toString())
+		.append("</titleFontEm>\n");
 
 		xml.append(tab(this.createXML(settings.getExportSetting(), context)));
 		xml.append(tab(this.createXML(settings.getCategorySetting(), context)));
@@ -1116,7 +1118,7 @@ public class PersistentXmlImpl extends Persistent {
 		return xml.toString();
 	}
 
-	
+
 	private String createXML(VGroup group, PersistentContext context) {
 		StringBuilder xml = new StringBuilder();
 
@@ -1186,7 +1188,7 @@ public class PersistentXmlImpl extends Persistent {
 			} else if (content instanceof ERModel) {
 				// do nothing
 //				subxml = this.createXMLERModel((ERModel) content, context);
-				
+
 			} else if (content instanceof Note) {
 //				subxml = this.createXML((Note) content, context);
 
@@ -1215,13 +1217,13 @@ public class PersistentXmlImpl extends Persistent {
 	private String createXMLERModel(ERModelSet modelSet, PersistentContext context) {
 		StringBuilder xml = new StringBuilder();
 		xml.append("<ermodels>\n");
-		
+
 		for (ERModel erModel : modelSet) {
 			xml.append("\t<ermodel>\n");
 			xml.append("\t\t<id>").append(context.ermodelMap.get(erModel)).append("</id>\n");
 			xml.append("\t\t<name>").append(erModel.getName()).append("</name>\n");
 			appendColor(xml, "color", erModel.getColor());
-			
+
 			xml.append("\t\t<vtables>\n");
 			for (ERVirtualTable table : erModel.getTables()) {
 				xml.append("\t\t\t<vtable>\n");
@@ -1247,7 +1249,7 @@ public class PersistentXmlImpl extends Persistent {
 
 			xml.append("\t</ermodel>\n");
 		}
-		
+
 		xml.append("</ermodels>\n");
 		return xml.toString();
 	}
@@ -1260,7 +1262,7 @@ public class PersistentXmlImpl extends Persistent {
 //	private String createXMLERModel(ERModel erModel, PersistentContext context) {
 //		StringBuilder xml = new StringBuilder();
 ////		xml.append("<ermodels>\n");
-////		
+////
 ////		for (ERModel erModel : ermodels) {
 //			xml.append("\t<ermodel>\n");
 //			xml.append("\t\t<id>").append(context.nodeElementMap.get(erModel)).append("</id>\n");
@@ -1276,7 +1278,7 @@ public class PersistentXmlImpl extends Persistent {
 //			xml.append("\t\t</vtables>\n");
 //			xml.append("\t</ermodel>\n");
 ////		}
-////		
+////
 ////		xml.append("</ermodels>\n");
 //		return xml.toString();
 //	}

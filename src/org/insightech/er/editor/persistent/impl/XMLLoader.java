@@ -535,7 +535,7 @@ public class XMLLoader {
 
 	private List<ERModel> loadErmodels(Element parent, LoadContext context) {
 		List<ERModel> results = new ArrayList<ERModel>();
-		
+
 		Element element = this.getElement(parent, "ermodels");
 
 		if (element != null) {
@@ -566,7 +566,7 @@ public class XMLLoader {
 					for (int k = 0; k < noteEls.getLength(); k++) {
 						Element noteElement = (Element) noteEls.item(k);
 						Note note = loadNote(model, noteElement, context);
-						
+
 						String id = this.getStringValue(noteElement, "id");
 						context.nodeElementMap.put(id, note);
 						notes.add(note);
@@ -574,7 +574,7 @@ public class XMLLoader {
 					}
 				}
 				model.setNotes(notes);
-				
+
 				List<VGroup> groups = new ArrayList<VGroup>();
 				Element elGroups = getElement(modelElement, "groups");
 				if (elGroups != null) {
@@ -582,7 +582,7 @@ public class XMLLoader {
 					for (int k = 0; k < groupEls.getLength(); k++) {
 						Element groupElement = (Element) groupEls.item(k);
 						VGroup group = loadGroup(model, groupElement, context);
-						
+
 						String id = this.getStringValue(groupElement, "id");
 						context.nodeElementMap.put(id, group);
 						groups.add(group);
@@ -1188,6 +1188,9 @@ public class XMLLoader {
 					"use_bezier_curve"));
 			settings.setSuspendValidator(this.getBooleanValue(element,
 					"suspend_validator"));
+			if (this.getStringValue(element, "titleFontEm") != null) {
+				settings.setTitleFontEm(new BigDecimal(this.getStringValue(element, "titleFontEm")));
+			}
 
 			ExportSetting exportSetting = settings.getExportSetting();
 			this.loadExportSetting(exportSetting, element, context);
@@ -1372,7 +1375,7 @@ public class XMLLoader {
 		VGroup group = new VGroup();
 		this.loadNodeElement(group, node, context);
 		group.setName(getStringValue(node, "name"));
-		
+
 		List<ERVirtualTable> vtables = model.getTables();
 		String[] keys = this.getTagValues(node, "node_element");
 		List<NodeElement> nodeElementList = new ArrayList<NodeElement>();
@@ -1391,7 +1394,7 @@ public class XMLLoader {
 
 		return group;
 	}
-	
+
 	private void loadTranslationSetting(TranslationSetting translationSetting,
 			Element parent, LoadContext context) {
 		Element element = this.getElement(parent, "translation_settings");
@@ -1533,7 +1536,7 @@ public class XMLLoader {
 				InsertedImage insertedImage = this.loadInsertedImage(
 						(Element) node, context);
 				contents.addNodeElement(insertedImage);
-				
+
 			} else if ("ermodel".equals(node.getNodeName())) {
 				ERModel ermodel = this.loadErmodel((Element) node, context);
 				contents.addNodeElement(ermodel);

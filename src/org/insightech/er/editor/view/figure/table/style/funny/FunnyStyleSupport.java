@@ -1,5 +1,7 @@
 package org.insightech.er.editor.view.figure.table.style.funny;
 
+import java.math.BigDecimal;
+
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
@@ -14,7 +16,7 @@ import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.swt.graphics.Font;
 import org.insightech.er.Activator;
 import org.insightech.er.ImageKey;
-import org.insightech.er.Resources;
+import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.IndexFigure;
 import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
@@ -25,8 +27,8 @@ public class FunnyStyleSupport extends AbstractStyleSupport {
 
 	private Label nameLabel;
 
-	public FunnyStyleSupport(TableFigure tableFigure) {
-		super(tableFigure);
+	public FunnyStyleSupport(TableFigure tableFigure, Settings settings) {
+		super(tableFigure, settings);
 	}
 
 	/**
@@ -51,7 +53,12 @@ public class FunnyStyleSupport extends AbstractStyleSupport {
 		Figure title = new Figure();
 		top.add(title, BorderLayout.TOP);
 		title.setLayoutManager(layout);
-		title.setBorder(new MarginBorder(new Insets(4, 4, 4, 4)));
+
+		if (new BigDecimal("1.5").equals(getSettings().getTitleFontEm())) {
+			title.setBorder(new MarginBorder(new Insets(2, 2, 2, 2)));
+		} else {
+			title.setBorder(new MarginBorder(new Insets(4, 4, 4, 4)));
+		}
 
 		ImageFigure image = new ImageFigure();
 		image.setBorder(new MarginBorder(new Insets(0, 0, 0, 0)));
@@ -114,6 +121,7 @@ public class FunnyStyleSupport extends AbstractStyleSupport {
 
 	public void setName(String name) {
 		this.nameLabel.setForegroundColor(this.getTextColor());
+		nameLabel.setFont(getTableFigure().getLargeFont());
 		this.nameLabel.setText(name);
 	}
 

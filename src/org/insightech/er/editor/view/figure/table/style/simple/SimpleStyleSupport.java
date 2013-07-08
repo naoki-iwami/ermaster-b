@@ -8,6 +8,7 @@ import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.swt.graphics.Font;
+import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.IndexFigure;
 import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.editor.view.figure.table.column.NormalColumnFigure;
@@ -17,8 +18,8 @@ public class SimpleStyleSupport extends AbstractStyleSupport {
 
 	private Label nameLabel;
 
-	public SimpleStyleSupport(TableFigure tableFigure) {
-		super(tableFigure);
+	public SimpleStyleSupport(TableFigure tableFigure, Settings settings) {
+		super(tableFigure, settings);
 	}
 
 	/**
@@ -107,6 +108,6 @@ public class SimpleStyleSupport extends AbstractStyleSupport {
 
 	public void addIndex(IndexFigure indexFigure, String name, boolean isFirst) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

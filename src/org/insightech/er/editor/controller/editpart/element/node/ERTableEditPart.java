@@ -29,9 +29,8 @@ import org.insightech.er.util.Check;
 public class ERTableEditPart extends TableViewEditPart implements IResizable {
 
 	public ERTableEditPart() {
-		System.out.println("**ERTableEditPart**");
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -40,7 +39,7 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 		ERDiagram diagram = this.getDiagram();
 		Settings settings = diagram.getDiagramContents().getSettings();
 
-		TableFigure figure = new TableFigure(settings.getTableStyle());
+		TableFigure figure = new TableFigure(settings);
 
 		this.changeFont(figure);
 
@@ -51,7 +50,7 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 	public void doPropertyChange(PropertyChangeEvent event) {
 		super.doPropertyChange(event);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

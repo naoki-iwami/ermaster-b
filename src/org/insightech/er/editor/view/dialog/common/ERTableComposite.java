@@ -181,7 +181,7 @@ public class ERTableComposite extends Composite {
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == 'a') {
+				if (e.keyCode == SWT.SPACE) {
 					Column targetColumn = getTargetColumn();
 					if (targetColumn == null
 							|| !(targetColumn instanceof CopyColumn)) {

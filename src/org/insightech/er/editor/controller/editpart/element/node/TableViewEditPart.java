@@ -66,7 +66,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 		} else {
 			modelChildren.addAll(tableView.getColumns());
 		}
-		
+
 		if (tableView instanceof ERTable) {
 			modelChildren.addAll(((ERTable)tableView).getIndexes());
 		}
@@ -190,7 +190,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 								columnFigure, normalColumn, false, false, false,
 								false, isRemoved);
 					}
-				
+
 				} else {
 					if ((notationLevel == Settings.NOTATION_LEVLE_KEY)) {
 						continue;
@@ -229,7 +229,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 	@Override
 	public void changeSettings(Settings settings) {
 		TableFigure figure = (TableFigure) this.getFigure();
-		figure.setTableStyle(settings.getTableStyle());
+		figure.setSettings(settings);
 
 		super.changeSettings(settings);
 	}
@@ -270,7 +270,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 			name = diagram.filter(tableView.getLogicalName());
 
 		} else {
-			name = diagram.filter(tableView.getLogicalName()) + "/"
+			name = diagram.filter(tableView.getLogicalName()) + " / "
 					+ diagram.filter(tableView.getPhysicalName());
 		}
 

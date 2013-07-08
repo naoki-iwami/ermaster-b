@@ -21,7 +21,7 @@ public class ViewEditPart extends TableViewEditPart {
 		ERDiagram diagram = this.getDiagram();
 		Settings settings = diagram.getDiagramContents().getSettings();
 
-		ViewFigure figure = new ViewFigure(settings.getTableStyle());
+		ViewFigure figure = new ViewFigure(settings);
 
 		this.changeFont(figure);
 

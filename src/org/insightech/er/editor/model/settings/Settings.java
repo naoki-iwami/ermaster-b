@@ -1,6 +1,7 @@
 package org.insightech.er.editor.model.settings;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import org.insightech.er.db.DBManagerFactory;
 import org.insightech.er.editor.model.diagram_contents.element.node.model_properties.ModelProperties;
@@ -64,6 +65,8 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 	private int viewOrderBy;
 
 	private int outlineViewMode;
+	
+	private BigDecimal titleFontEm;
 
 	private boolean autoImeChange;
 
@@ -184,6 +187,22 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	public void setViewOrderBy(int viewOrderBy) {
 		this.viewOrderBy = viewOrderBy;
+	}
+
+	/**
+	 * titleFontEmÇéÊìæÇµÇ‹Ç∑ÅB
+	 * @return titleFontEm
+	 */
+	public BigDecimal getTitleFontEm() {
+	    return titleFontEm;
+	}
+
+	/**
+	 * titleFontEmÇê›íËÇµÇ‹Ç∑ÅB
+	 * @param titleFontEm titleFontEm
+	 */
+	public void setTitleFontEm(BigDecimal titleFontEm) {
+	    this.titleFontEm = titleFontEm;
 	}
 
 	public boolean isAutoImeChange() {

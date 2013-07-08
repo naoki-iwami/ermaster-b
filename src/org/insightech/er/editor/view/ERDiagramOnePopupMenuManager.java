@@ -1,5 +1,7 @@
 package org.insightech.er.editor.view;
 
+import java.math.BigDecimal;
+
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -11,6 +13,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.insightech.er.ResourceString;
+import org.insightech.er.editor.controller.command.common.ChangeFontCommand;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModel;
 import org.insightech.er.editor.model.settings.CategorySetting;
 import org.insightech.er.editor.model.settings.Settings;
@@ -38,6 +41,7 @@ import org.insightech.er.editor.view.action.option.OptionSettingAction;
 import org.insightech.er.editor.view.action.option.notation.ChangeCapitalAction;
 import org.insightech.er.editor.view.action.option.notation.ChangeNotationExpandGroupAction;
 import org.insightech.er.editor.view.action.option.notation.ChangeStampAction;
+import org.insightech.er.editor.view.action.option.notation.ChangeTitleFontSizeAction;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToFrameAction;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToFunnyAction;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToSimpleAction;
@@ -66,7 +70,7 @@ public class ERDiagramOnePopupMenuManager extends MenuManager {
 	public ERDiagramOnePopupMenuManager(ActionRegistry actionRegistry,
 			final ERModel erModel) {
 		this.erModel = erModel;
-				
+
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
 		this.actionRegistry = actionRegistry;
@@ -92,6 +96,7 @@ public class ERDiagramOnePopupMenuManager extends MenuManager {
 		final IAction changeDesignToSimpleAction = getAction(ChangeDesignToSimpleAction.ID);
 
 		final IAction changeCapitalAction = getAction(ChangeCapitalAction.ID);
+		final IAction changeTitleFontSizeAction = getAction(ChangeTitleFontSizeAction.ID);
 		final IAction changeStampAction = getAction(ChangeStampAction.ID);
 
 		final IAction changeFreeLayoutAction = getAction(ChangeFreeLayoutAction.ID);
@@ -173,6 +178,7 @@ public class ERDiagramOnePopupMenuManager extends MenuManager {
 		displayMenu.add(designMenu);
 
 		displayMenu.add(changeCapitalAction);
+		displayMenu.add(changeTitleFontSizeAction);
 		displayMenu.add(changeStampAction);
 
 		this.add(displayMenu);
@@ -311,6 +317,9 @@ public class ERDiagramOnePopupMenuManager extends MenuManager {
 
 				if (settings.isCapital()) {
 					changeCapitalAction.setChecked(true);
+				}
+				if (new BigDecimal("1.5").equals(settings.getTitleFontEm())) {
+					changeTitleFontSizeAction.setChecked(true);
 				}
 
 				if (settings.getModelProperties().isDisplay()) {
