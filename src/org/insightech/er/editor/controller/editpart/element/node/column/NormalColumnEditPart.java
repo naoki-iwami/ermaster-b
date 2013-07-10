@@ -13,6 +13,7 @@ import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.connection.ConnectionElement;
 import org.insightech.er.editor.model.diagram_contents.element.connection.Relation;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERVirtualTable;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.TableView;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.column.NormalColumn;
 import org.insightech.er.editor.model.diagram_contents.not_element.group.ColumnGroup;
@@ -39,7 +40,7 @@ public class NormalColumnEditPart extends ColumnEditPart {
 		NormalColumnFigure columnFigure = (NormalColumnFigure) this.getFigure();
 
 		NormalColumn normalColumn = (NormalColumn) this.getModel();
-		
+
 		if (diagram.isShowMainColumn()) {
 			if (normalColumn.isAutoIncrement()
 					|| normalColumn.getWord() == null) {
@@ -82,7 +83,9 @@ public class NormalColumnEditPart extends ColumnEditPart {
 				return;
 			}
 
-			addColumnFigure(diagram, tableFigure, columnFigure, normalColumn,
+			ERTable table = (ERTable) parent.getModel(); // TODO
+
+			addColumnFigure(diagram, table, tableFigure, columnFigure, normalColumn,
 					isSelectedReferenced, isSelectedForeignKey, isAdded,
 					isUpdated, false);
 
@@ -97,7 +100,7 @@ public class NormalColumnEditPart extends ColumnEditPart {
 		}
 	}
 
-	public static void addColumnFigure(ERDiagram diagram,
+	public static void addColumnFigure(ERDiagram diagram, ERTable table,
 			TableFigure tableFigure, NormalColumnFigure columnFigure,
 			NormalColumn normalColumn, boolean isSelectedReferenced,
 			boolean isSelectedForeignKey, boolean isAdded, boolean isUpdated,
@@ -125,7 +128,17 @@ public class NormalColumnEditPart extends ColumnEditPart {
 			displayType = true;
 		}
 
-		tableFigure.addColumn(columnFigure, diagram.getDiagramContents()
+//		List<ERVirtualTable> tables = diagram.getCurrentErmodel().getTables();
+//		for (ERVirtualTable vtable : tables) {
+//			tableFigure.getName();
+//			//vtable.getName()
+//
+//		}
+
+		//diagram.getDiagramContents().get
+
+
+		tableFigure.addColumn(table, normalColumn, columnFigure, diagram.getDiagramContents()
 				.getSettings().getViewMode(), diagram.filter(normalColumn
 				.getPhysicalName()), diagram.filter(normalColumn
 				.getLogicalName()), type, normalColumn.isPrimaryKey(),

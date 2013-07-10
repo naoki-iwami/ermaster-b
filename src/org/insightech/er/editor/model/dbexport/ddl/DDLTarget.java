@@ -6,17 +6,17 @@ public class DDLTarget implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 8212409392159961699L;
 
-	public boolean dropTablespace = true;
+	public boolean dropTablespace = false;
 
-	public boolean dropSequence = true;
+	public boolean dropSequence = false;
 
-	public boolean dropTrigger = true;
+	public boolean dropTrigger = false;
 
-	public boolean dropView = true;
+	public boolean dropView = false;
 
-	public boolean dropIndex = true;
+	public boolean dropIndex = false;
 
-	public boolean dropTable = true;
+	public boolean dropTable = false;
 
 	public boolean createTablespace = true;
 
@@ -34,15 +34,15 @@ public class DDLTarget implements Serializable, Cloneable {
 
 	public boolean createComment = true;
 
-	public boolean inlineTableComment = true;
+	public boolean inlineTableComment = false;
 
-	public boolean inlineColumnComment = true;
+	public boolean inlineColumnComment = false;
 
-	public boolean commentValueDescription = true;
+	public boolean commentValueDescription = false;
 
 	public boolean commentValueLogicalName = false;
 
-	public boolean commentValueLogicalNameDescription = false;
+	public boolean commentValueLogicalNameDescription = true;
 
 	public boolean commentReplaceLineFeed = false;
 

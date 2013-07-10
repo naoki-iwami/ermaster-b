@@ -145,7 +145,15 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 			}
 
 			if (updated != null) {
-				showRemovedColumns(diagram, tableFigure, updated
+				ERTable table = null;
+				if (getModel() instanceof ERTable) {
+					table = (ERTable) getModel();
+				}
+				if (getModel() instanceof ERVirtualTable) {
+					table = ((ERVirtualTable) getModel()).getRawTable();
+				}
+
+				showRemovedColumns(diagram, table, tableFigure, updated
 						.getRemovedColumns(), true);
 			}
 
@@ -161,7 +169,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 
 	}
 
-	public static void showRemovedColumns(ERDiagram diagram,
+	public static void showRemovedColumns(ERDiagram diagram, ERTable table,
 			TableFigure tableFigure, Collection<Column> removedColumns,
 			boolean isRemoved) {
 
@@ -186,7 +194,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 						NormalColumnFigure columnFigure = new NormalColumnFigure();
 						tableFigure.getColumns().add(columnFigure);
 
-						NormalColumnEditPart.addColumnFigure(diagram, tableFigure,
+						NormalColumnEditPart.addColumnFigure(diagram, table, tableFigure,
 								columnFigure, normalColumn, false, false, false,
 								false, isRemoved);
 					}
@@ -216,7 +224,7 @@ public abstract class TableViewEditPart extends NodeElementEditPart implements
 				NormalColumnFigure columnFigure = new NormalColumnFigure();
 				tableFigure.getColumns().add(columnFigure);
 
-				NormalColumnEditPart.addColumnFigure(diagram, tableFigure,
+				NormalColumnEditPart.addColumnFigure(diagram, table, tableFigure,
 						columnFigure, normalColumn, false, false, false,
 						false, isRemoved);
 			}

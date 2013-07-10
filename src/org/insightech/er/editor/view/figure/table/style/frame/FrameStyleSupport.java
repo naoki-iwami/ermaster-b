@@ -8,6 +8,8 @@ import org.eclipse.draw2d.TitleBarBorder;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Font;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.column.NormalColumn;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.IndexFigure;
 import org.insightech.er.editor.view.figure.table.TableFigure;
@@ -66,7 +68,7 @@ public class FrameStyleSupport extends AbstractStyleSupport {
 		}
 	}
 
-	public void addColumn(NormalColumnFigure columnFigure, int viewMode,
+	public void addColumn(ERTable table, NormalColumn normalColumn, NormalColumnFigure columnFigure, int viewMode,
 			String physicalName, String logicalName, String type,
 			boolean primaryKey, boolean foreignKey, boolean isNotNull,
 			boolean uniqueKey, boolean displayKey, boolean displayDetail,
@@ -79,7 +81,7 @@ public class FrameStyleSupport extends AbstractStyleSupport {
 		label.setForegroundColor(this.getTextColor());
 
 		StringBuilder text = new StringBuilder();
-		text.append(this.getColumnText(viewMode, physicalName, logicalName,
+		text.append(this.getColumnText(table, normalColumn, viewMode, physicalName, logicalName,
 				type, isNotNull, uniqueKey, displayDetail, displayType));
 
 		if (displayKey) {

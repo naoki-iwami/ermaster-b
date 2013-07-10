@@ -3,6 +3,8 @@ package org.insightech.er.editor.view.figure.table.style;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Font;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.column.NormalColumn;
 import org.insightech.er.editor.view.figure.table.IndexFigure;
 import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
 import org.insightech.er.editor.view.figure.table.column.NormalColumnFigure;
@@ -23,7 +25,7 @@ public interface StyleSupport {
 
 	public void adjustBounds(Rectangle rect);
 
-	public void addColumn(NormalColumnFigure columnFigure, int viewMode,
+	public void addColumn(ERTable table, NormalColumn normalColumn, NormalColumnFigure columnFigure, int viewMode,
 			String physicalName, String logicalName, String type,
 			boolean primaryKey, boolean foreignKey, boolean isNotNull,
 			boolean uniqueKey, boolean displayKey, boolean displayDetail,

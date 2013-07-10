@@ -114,7 +114,7 @@ public class RemovedERTableEditPart extends RemovedNodeElementEditPart
 
 		tableFigure.clearColumns();
 
-		TableViewEditPart.showRemovedColumns(diagram, tableFigure, table
+		TableViewEditPart.showRemovedColumns(diagram, table, tableFigure, table
 				.getColumns(), false);
 	}
 

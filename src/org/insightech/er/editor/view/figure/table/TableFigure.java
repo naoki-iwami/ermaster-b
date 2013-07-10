@@ -9,6 +9,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.insightech.er.ImageKey;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.column.NormalColumn;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToFrameAction;
 import org.insightech.er.editor.view.action.option.notation.design.ChangeDesignToSimpleAction;
@@ -92,7 +94,7 @@ public class TableFigure extends RoundedRectangle {
 		this.columns.removeAll();
 	}
 
-	public void addColumn(NormalColumnFigure columnFigure, int viewMode,
+	public void addColumn(ERTable table, NormalColumn normalColumn, NormalColumnFigure columnFigure, int viewMode,
 			String physicalName, String logicalName, String type,
 			boolean primaryKey, boolean foreignKey, boolean isNotNull,
 			boolean uniqueKey, boolean displayKey, boolean displayDetail,
@@ -103,7 +105,7 @@ public class TableFigure extends RoundedRectangle {
 		columnFigure.removeAll();
 		columnFigure.setBackgroundColor(null);
 
-		this.styleSupport.addColumn(columnFigure, viewMode, physicalName,
+		this.styleSupport.addColumn(table, normalColumn, columnFigure, viewMode, physicalName,
 				logicalName, type, primaryKey, foreignKey, isNotNull,
 				uniqueKey, displayKey, displayDetail, displayType,
 				isSelectedReferenced, isSelectedForeignKey, isAdded, isUpdated,

@@ -61,11 +61,11 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 	private int notationLevel;
 
 	private int viewMode;
-	
+
 	private int viewOrderBy;
 
 	private int outlineViewMode;
-	
+
 	private BigDecimal titleFontEm;
 
 	private boolean autoImeChange;
@@ -73,7 +73,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 	private boolean validatePhysicalName;
 
 	private boolean useBezierCurve;
-	
+
 	private boolean suspendValidator;
 
 	public int getNotationLevel() {
@@ -104,6 +104,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 		this.validatePhysicalName = true;
 		this.useBezierCurve = false;
 		this.suspendValidator = false;
+		this.titleFontEm = new BigDecimal("1.5");
 	}
 
 	public boolean isCapital() {
@@ -270,7 +271,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	/**
 	 * translationSettings ‚ðŽæ“¾‚µ‚Ü‚·.
-	 * 
+	 *
 	 * @return translationSettings
 	 */
 	public TranslationSetting getTranslationSetting() {
@@ -279,7 +280,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	/**
 	 * environmentSetting ‚ðŽæ“¾‚µ‚Ü‚·.
-	 * 
+	 *
 	 * @return environmentSetting
 	 */
 	public EnvironmentSetting getEnvironmentSetting() {

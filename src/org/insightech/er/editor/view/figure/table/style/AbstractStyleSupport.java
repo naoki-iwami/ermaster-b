@@ -1,5 +1,7 @@
 package org.insightech.er.editor.view.figure.table.style;
 
+import java.util.List;
+
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -12,6 +14,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.insightech.er.Resources;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.column.NormalColumn;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.unique_key.ComplexUniqueKey;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.figure.table.TableFigure;
 import org.insightech.er.editor.view.figure.table.column.GroupColumnFigure;
@@ -68,7 +72,7 @@ public abstract class AbstractStyleSupport implements StyleSupport {
 	public void createFooter() {
 	}
 
-	protected String getColumnText(int viewMode, String physicalName,
+	protected String getColumnText(ERTable table, NormalColumn normalColumn, int viewMode, String physicalName,
 			String logicalName, String type, boolean isNotNull,
 			boolean uniqueKey, boolean detail, boolean displayType) {
 		StringBuilder text = new StringBuilder();
@@ -92,15 +96,25 @@ public abstract class AbstractStyleSupport implements StyleSupport {
 		}
 
 		if (detail) {
-			/*if (isNotNull && uniqueKey) {
-				text.append(" (UNN)");
-
-			} else if (isNotNull) {
-				text.append(" (NN)");
-
-			} else*/
 			if (uniqueKey) {
 				text.append(" (U)");
+			} else {
+				List<ComplexUniqueKey> list = table.getComplexUniqueKeyList();
+				if (list != null) {
+					boolean hit = false;
+					for (ComplexUniqueKey key : list) {
+						for (NormalColumn column : key.getColumnList()) {
+							if (column.equals(normalColumn)) {
+								text.append(" (U+)");
+								hit = true;
+								break;
+							}
+						}
+						if (hit) {
+							break;
+						}
+					}
+				}
 			}
 		}
 
