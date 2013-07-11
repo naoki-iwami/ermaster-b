@@ -1,7 +1,9 @@
 package org.insightech.er.editor.controller.command.common;
 
 import org.insightech.er.editor.controller.command.AbstractCommand;
+import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.ViewableModel;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERVirtualTable;
 
 public class ChangeBackgroundColorCommand extends AbstractCommand {
 
@@ -32,6 +34,9 @@ public class ChangeBackgroundColorCommand extends AbstractCommand {
 		this.oldColor = this.model.getColor();
 
 		this.model.setColor(red, green, blue);
+		if (model instanceof ERVirtualTable) {
+			ERModelUtil.refreshDiagram(((ERVirtualTable) model).getDiagram(), ((ERVirtualTable)model).getRawTable());
+		}
 	}
 
 	/**

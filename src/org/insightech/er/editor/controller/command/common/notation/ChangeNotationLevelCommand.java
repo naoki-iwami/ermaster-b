@@ -2,6 +2,7 @@ package org.insightech.er.editor.controller.command.common.notation;
 
 import org.insightech.er.editor.controller.command.AbstractCommand;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.settings.Settings;
 
 public class ChangeNotationLevelCommand extends AbstractCommand {
@@ -11,7 +12,7 @@ public class ChangeNotationLevelCommand extends AbstractCommand {
 	private int oldNotationLevel;
 
 	private int newNotationLevel;
-	
+
 	private Settings settings;
 
 	public ChangeNotationLevelCommand(ERDiagram diagram, int notationLevel) {
@@ -28,6 +29,7 @@ public class ChangeNotationLevelCommand extends AbstractCommand {
 	protected void doExecute() {
 		this.settings.setNotationLevel(this.newNotationLevel);
 		this.diagram.changeAll();
+		ERModelUtil.refreshDiagram(diagram);
 	}
 
 	/**

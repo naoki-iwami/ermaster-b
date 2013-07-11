@@ -1,9 +1,12 @@
 package org.insightech.er.editor.view.outline;
 
+import java.util.List;
+
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.parts.ScrollableThumbnail;
 import org.eclipse.gef.EditDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
@@ -16,15 +19,29 @@ import org.eclipse.gef.ui.parts.ContentOutlinePage;
 import org.eclipse.gef.ui.parts.TreeViewer;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.actions.ActionFactory;
+import org.insightech.er.Activator;
+import org.insightech.er.editor.controller.command.ermodel.OpenERModelCommand;
+import org.insightech.er.editor.controller.editpart.element.node.ERTableEditPart;
+import org.insightech.er.editor.controller.editpart.outline.ERDiagramOutlineEditPart;
 import org.insightech.er.editor.controller.editpart.outline.ERDiagramOutlineEditPartFactory;
+import org.insightech.er.editor.controller.editpart.outline.ermodel.ERModelOutlineEditPart;
+import org.insightech.er.editor.controller.editpart.outline.ermodel.ERModelSetOutlineEditPart;
+import org.insightech.er.editor.controller.editpart.outline.table.TableOutlineEditPart;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModel;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
 import org.insightech.er.editor.view.action.outline.ChangeNameAction;
 import org.insightech.er.editor.view.action.outline.index.CreateIndexAction;
 import org.insightech.er.editor.view.action.outline.notation.type.ChangeOutlineViewToBothAction;
@@ -57,6 +74,10 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 
 	private ActionRegistry registry;
 
+	private boolean quickMode;
+
+	private ERDiagramOutlineEditPartFactory editPartFactory;
+
 	public ERDiagramOutlinePage(ERDiagram diagram) {
 		// GEFツリービューワを使用する
 		super(new TreeViewer());
@@ -78,16 +99,19 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 		// コンストラクタで指定したビューワの作成
 		this.viewer.createControl(this.sash);
 
-		// EditPartFactory の設定
-		ERDiagramOutlineEditPartFactory editPartFactory = new ERDiagramOutlineEditPartFactory();
+		editPartFactory = new ERDiagramOutlineEditPartFactory();
+		editPartFactory.setQuickMode(quickMode);
+
 		this.viewer.setEditPartFactory(editPartFactory);
 
 		// グラフィカル・エディタのルート・モデルをツリー・ビューワにも設定
 		this.viewer.setContents(this.diagram);
 
-		Canvas canvas = new Canvas(this.sash, SWT.BORDER);
-		// サムネイル・フィギュアを配置する為の LightweightSystem
-		this.lws = new LightweightSystem(canvas);
+		if (!quickMode) {
+			Canvas canvas = new Canvas(this.sash, SWT.BORDER);
+			// サムネイル・フィギュアを配置する為の LightweightSystem
+			this.lws = new LightweightSystem(canvas);
+		}
 
 		this.resetView(this.registry);
 
@@ -106,6 +130,9 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 	}
 
 	private void showThumbnail() {
+		if (quickMode) {
+			return;
+		}
 		// RootEditPartのビューをソースとしてサムネイルを作成
 		ScalableFreeformRootEditPart editPart = (ScalableFreeformRootEditPart) this.graphicalViewer
 				.getRootEditPart();
@@ -147,6 +174,9 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 
 	private void resetAction(ActionRegistry registry) {
 		// アウトライン・ページで有効にするアクション
+		if (getSite() == null) {
+			return;
+		}
 		IActionBars bars = this.getSite().getActionBars();
 
 		String id = ActionFactory.UNDO.getId();
@@ -193,6 +223,103 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 	@Override
 	public EditPartViewer getViewer() {
 		return super.getViewer();
+	}
+
+	public void update() {
+		viewer.flush();
+//		gettr
+//		if (model != null) {
+//			try {
+//				model.update(editor.getDocumentProvider()
+//						.getDocument(editor.getEditorInput()).get());
+//			} catch (Throwable t) {
+//				t.printStackTrace();
+//			}
+//		}
+	}
+
+	public void setFilterText(String filterText) {
+		editPartFactory.setFilterText(filterText);
+		viewer.setContents(diagram);
+		Tree tree = (Tree)viewer.getControl();
+		TreeItem[] items = tree.getItems();
+		expand(items);
+		TreeItem[] tableItems = items[0].getItems();
+		if (tableItems.length >= 1) {
+			tree.setSelection(tableItems[0]);
+		}
+//		viewer.getContents().getChildren();
+
+
+
+//		viewer.flush();
+//		viewer.getEditPartFactory()
+//		if (filterText == null) {
+//			filterText = "";
+//		}
+//		this.filterText = filterText;
+//		getTreeViewer().refresh();
+//		getTreeViewer().expandAll();
+//		JavaScriptElement element = getFirstElement(model, filterText);
+//		if(element != null){
+//			getViewer().setSelection(new StructuredSelection(element), true);
+//		}
+	}
+
+	private void expand(TreeItem[] items) {
+		for (int i = 0; i < items.length; i++) {
+			expand(items[i].getItems());
+			items[i].setExpanded(true);
+		}
+	}
+
+	/**
+	 * quickModeを設定します。
+	 * @param quickMode quickMode
+	 */
+	public void setQuickMode(boolean quickMode) {
+	    this.quickMode = quickMode;
+	}
+
+	public void selectSelection() {
+		IStructuredSelection sel = (IStructuredSelection) getViewer().getSelection();
+		Object firstElement = sel.getFirstElement();
+		if (firstElement instanceof ERDiagramOutlineEditPart) {
+			Tree tree = (Tree)viewer.getControl();
+			TreeItem[] items = tree.getItems();
+			expand(items);
+			TreeItem[] tableItems = items[0].getItems();
+			if (tableItems.length >= 1) {
+				Object data = tableItems[0].getData();
+				firstElement = data;
+			}
+		}
+		if (firstElement instanceof TableOutlineEditPart) {
+			Object model = ((TableOutlineEditPart)firstElement).getModel();
+			ERTable table = (ERTable) model;
+			ERModel erModel = table.getDiagram().findModelByTable(table);
+			if (erModel != null) {
+
+				OpenERModelCommand command = new OpenERModelCommand(diagram, erModel);
+				command.setTable(table);
+				this.getViewer().getEditDomain().getCommandStack().execute(command);
+
+				ERDiagramOutlineEditPart contents = (ERDiagramOutlineEditPart) diagram.getEditor().getOutlinePage().getViewer().getContents();
+				if (contents != null) {
+					List<ERModelOutlineEditPart> parts = ((ERModelSetOutlineEditPart) contents.getChildren().get(0)).getChildren();
+					for (ERModelOutlineEditPart part : parts) {
+						if (part.getModel().equals(erModel)) {
+							ISelection selection = new StructuredSelection(part);
+							diagram.getEditor().getOutlinePage().setSelection(selection);
+						}
+					}
+				}
+
+			} else {
+				Activator.showMessageDialog(table.getPhysicalName() + " テーブルはそのダイアグラムにも配置されていません。");
+			}
+
+		}
 	}
 
 }

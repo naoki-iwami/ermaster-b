@@ -1191,6 +1191,9 @@ public class XMLLoader {
 			if (this.getStringValue(element, "titleFontEm") != null) {
 				settings.setTitleFontEm(new BigDecimal(this.getStringValue(element, "titleFontEm")));
 			}
+			if (this.getStringValue(element, "masterDataBasePath") != null) {
+				settings.setMasterDataBasePath(this.getStringValue(element, "masterDataBasePath"));
+			}
 
 			ExportSetting exportSetting = settings.getExportSetting();
 			this.loadExportSetting(exportSetting, element, context);

@@ -10,7 +10,14 @@ import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.node.category.Category;
 
 public abstract class AbstractOutlineEditPart extends AbstractTreeEditPart
-		implements PropertyChangeListener {
+		implements PropertyChangeListener, FilteringEditPart {
+
+	private String filterText;
+
+	@Override
+	public void setFilterText(String filterText) {
+		this.filterText = filterText;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -65,5 +72,13 @@ public abstract class AbstractOutlineEditPart extends AbstractTreeEditPart
 
 	protected void execute(Command command) {
 		this.getViewer().getEditDomain().getCommandStack().execute(command);
+	}
+
+	/**
+	 * filterTextÇéÊìæÇµÇ‹Ç∑ÅB
+	 * @return filterText
+	 */
+	public String getFilterText() {
+	    return filterText;
 	}
 }

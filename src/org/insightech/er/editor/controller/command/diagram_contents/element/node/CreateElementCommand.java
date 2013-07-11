@@ -3,10 +3,13 @@ package org.insightech.er.editor.controller.command.diagram_contents.element.nod
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.insightech.er.ResourceString;
+import org.insightech.er.editor.EROneDiagramEditor;
 import org.insightech.er.editor.controller.command.AbstractCommand;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.diagram_contents.element.node.Location;
 import org.insightech.er.editor.model.diagram_contents.element.node.NodeElement;
 import org.insightech.er.editor.model.diagram_contents.element.node.category.Category;
@@ -47,7 +50,7 @@ public class CreateElementCommand extends AbstractCommand {
 			view.setLogicalName(View.NEW_LOGICAL_NAME);
 			view.setPhysicalName(View.NEW_PHYSICAL_NAME);
 		}
-		
+
 		this.enclosedElementList = enclosedElementList;
 	}
 
@@ -63,11 +66,6 @@ public class CreateElementCommand extends AbstractCommand {
 			if (diagram.getCurrentErmodel() != null) {
 				diagram.getCurrentErmodel().addGroup(group);
 			} else {
-//				ErrorDialog.openError(Display.getCurrent().getActiveShell(),
-//						"エラー", "全体ビューにグループは設定できません。", Status.OK_STATUS);
-//				ErrorDialog dialog = new ErrorDialog(
-//						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-//						"エラー", "全体ビューにグループは設定できません。", Status.OK_STATUS, IStatus.OK);
 				ErrorDialog dialog = new ErrorDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						"全体ビューにグループは設定できません。");
 				dialog.open();
@@ -75,11 +73,12 @@ public class CreateElementCommand extends AbstractCommand {
 		} else {
 			if (diagram.getCurrentErmodel() != null) {
 				diagram.getCurrentErmodel().addNewContent(this.element);
+				ERModelUtil.refreshDiagram(diagram, element);
 			} else {
 				this.diagram.addNewContent(this.element);
 			}
 		}
-				
+
 //		if (!(this.element instanceof VGroup)) {
 //		} else {
 //			VGroup group = (VGroup) this.element;
@@ -87,7 +86,7 @@ public class CreateElementCommand extends AbstractCommand {
 //			group.setContents(this.enclosedElementList);
 //			this.diagram.addGroup(group);
 //		}
-		
+
 	}
 
 	/**

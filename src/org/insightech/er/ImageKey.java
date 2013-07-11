@@ -2,7 +2,7 @@ package org.insightech.er;
 
 /**
  * {@link Activator#getImage(String)},
- * {@link Activator#getImageDescriptor(String)} �̃L�[�ƂȂ�萔���`�����N���X
+ * {@link Activator#getImageDescriptor(String)}
  */
 public interface ImageKey {
 
@@ -74,4 +74,5 @@ public interface ImageKey {
 	public String ZOOM_OUT = "ZOOM_OUT";
 	public String ZOOM_ADJUST = "ZOOM_ADJUST";
 	public String DIAGRAM = "DIAGRAM";
+	public String EDIT_EXCEL = "EDIT_EXCEL";
 }

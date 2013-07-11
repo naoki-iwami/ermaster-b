@@ -13,6 +13,7 @@ import org.insightech.er.editor.model.diagram_contents.element.node.NodeElement;
 import org.insightech.er.editor.model.diagram_contents.element.node.NodeSet;
 import org.insightech.er.editor.model.diagram_contents.element.node.category.Category;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModel;
+import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModelSet;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.VGroup;
 import org.insightech.er.editor.model.diagram_contents.element.node.note.Note;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
@@ -472,6 +473,17 @@ public class ERDiagram extends ViewableModel {
 				vtable.doChangeTable();
 			}
 		}
+	}
+
+	public ERModel findModelByTable(ERTable table) {
+		for (ERModel model : diagramContents.getModelSet()) {
+			for (ERVirtualTable vtable : model.getTables()) {
+				if (vtable.getRawTable().equals(table)) {
+					return model;
+				}
+			}
+		}
+		return null;
 	}
 
 //	/**

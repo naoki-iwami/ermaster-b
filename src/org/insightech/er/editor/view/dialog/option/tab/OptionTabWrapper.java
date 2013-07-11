@@ -1,10 +1,16 @@
 package org.insightech.er.editor.view.dialog.option.tab;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.TabFolder;
 import org.insightech.er.common.exception.InputException;
 import org.insightech.er.common.widgets.CompositeFactory;
+import org.insightech.er.common.widgets.FileText;
+import org.insightech.er.common.widgets.InnerDirectoryText;
 import org.insightech.er.common.widgets.ValidatableTabWrapper;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.dialog.option.OptionSettingDialog;
@@ -22,6 +28,8 @@ public class OptionTabWrapper extends ValidatableTabWrapper {
 	private Settings settings;
 
 	private OptionSettingDialog dialog;
+
+	private InnerDirectoryText outputFileText;
 
 	public OptionTabWrapper(OptionSettingDialog dialog, TabFolder parent,
 			int style, Settings settings) {
@@ -47,6 +55,18 @@ public class OptionTabWrapper extends ValidatableTabWrapper {
 				this, "label.use.bezier.curve");
 		this.suspendValidatorCheck = CompositeFactory.createCheckbox(
 				this.dialog, this, "label.suspend.validator");
+
+		Composite innerComp = new Composite(this, SWT.NONE);
+		GridLayout innerLayout = new GridLayout();
+		innerLayout.numColumns = 3;
+		innerComp.setLayout(innerLayout);
+		CompositeFactory.createLabel(innerComp, "マスタデータ基準ディレクトリ");
+		this.outputFileText = new InnerDirectoryText(innerComp, SWT.BORDER);
+		GridData gridData = new GridData();
+		gridData.widthHint = 200;
+		this.outputFileText.setLayoutData(gridData);
+//		outputFileText.setText("");
+
 	}
 
 	@Override
@@ -57,6 +77,10 @@ public class OptionTabWrapper extends ValidatableTabWrapper {
 		this.useBezierCurveCheck.setSelection(this.settings.isUseBezierCurve());
 		this.suspendValidatorCheck.setSelection(this.settings
 				.isSuspendValidator());
+
+		if (settings.getMasterDataBasePath() != null) {
+			outputFileText.setText(settings.getMasterDataBasePath());
+		}
 	}
 
 	/**
@@ -71,6 +95,7 @@ public class OptionTabWrapper extends ValidatableTabWrapper {
 				.setUseBezierCurve(this.useBezierCurveCheck.getSelection());
 		this.settings.setSuspendValidator(this.suspendValidatorCheck
 				.getSelection());
+		settings.setMasterDataBasePath(outputFileText.getFilePath());
 	}
 
 	@Override

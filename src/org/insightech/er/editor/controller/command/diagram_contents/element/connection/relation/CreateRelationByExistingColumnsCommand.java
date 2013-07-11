@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.PlatformUI;
 import org.insightech.er.Activator;
+import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.diagram_contents.element.connection.Relation;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModelSet;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
@@ -49,7 +50,7 @@ public class CreateRelationByExistingColumnsCommand extends
 		if (targetTable instanceof ERVirtualTable) {
 			targetTable = ((ERVirtualTable)targetTable).getRawTable();
 		}
-		
+
 		this.relation.setSource(sourceTable);
 		this.relation.setTargetWithoutForeignKey(targetTable);
 
@@ -64,7 +65,7 @@ public class CreateRelationByExistingColumnsCommand extends
 					this.relation);
 			foreignKeyColumn.setWord(null);
 		}
-		
+
 		if (this.relation.getSource() instanceof ERTable
 				|| this.relation.getTarget() instanceof ERTable) {
 			// ビュー内でリレーションを消した場合、ここにはERVirtualTableでなくERTableで来る
@@ -73,6 +74,8 @@ public class CreateRelationByExistingColumnsCommand extends
 		}
 
 		targetTable.setDirty();
+
+		ERModelUtil.refreshDiagram(relation.getSource().getDiagram(), sourceTable);
 	}
 
 	/**

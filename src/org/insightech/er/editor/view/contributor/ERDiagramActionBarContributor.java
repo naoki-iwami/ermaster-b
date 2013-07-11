@@ -36,6 +36,7 @@ import org.insightech.er.editor.view.action.dbexport.ExportToDBAction.ExportToDB
 import org.insightech.er.editor.view.action.dbexport.ExportToDDLAction;
 import org.insightech.er.editor.view.action.edit.ChangeBackgroundColorAction;
 import org.insightech.er.editor.view.action.edit.ChangeBackgroundColorAction.ChangeBackgroundColorRetargetAction;
+import org.insightech.er.editor.view.action.edit.EditExcelAction;
 import org.insightech.er.editor.view.action.line.HorizontalLineAction;
 import org.insightech.er.editor.view.action.line.HorizontalLineAction.HorizontalLineRetargetAction;
 import org.insightech.er.editor.view.action.line.VerticalLineAction;
@@ -109,6 +110,12 @@ public class ERDiagramActionBarContributor extends ActionBarContributor {
 				IAction.AS_CHECK_BOX);
 		exportDdlAction.setImageDescriptor(Activator.getImageDescriptor(ImageKey.EXPORT_DDL));
 		this.addRetargetAction(exportDdlAction);
+
+		RetargetAction editExcelAction = new RetargetAction(EditExcelAction.ID,
+				ResourceString.getResourceString("dialog.title.edit.excel"),
+				IAction.AS_CHECK_BOX);
+		editExcelAction.setImageDescriptor(Activator.getImageDescriptor(ImageKey.EDIT_EXCEL));
+		this.addRetargetAction(editExcelAction);
 
 		RetargetAction lockEditAction = new RetargetAction(LockEditAction.ID,
 				ResourceString.getResourceString("action.title.lock.edit"),
@@ -235,8 +242,8 @@ public class ERDiagramActionBarContributor extends ActionBarContributor {
 		toolBarManager
 				.add(getActionRegistry().getAction(VerticalLineAction.ID));
 
-		toolBarManager.add(getActionRegistry().getAction(
-				ChangeBackgroundColorAction.ID));
+		toolBarManager.add(getActionRegistry().getAction(ChangeBackgroundColorAction.ID));
+		toolBarManager.add(getActionRegistry().getAction(EditExcelAction.ID));
 
 		toolBarManager.add(new Separator());
 

@@ -3,6 +3,7 @@ package org.insightech.er.editor.controller.editpart.outline.table;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
@@ -24,7 +25,7 @@ public class TableSetOutlineEditPart extends AbstractOutlineEditPart {
 			refresh();
 		}
 	}
-	
+
 	public static List<EditPart> tableEditParts;
 
 	/**
@@ -37,8 +38,14 @@ public class TableSetOutlineEditPart extends AbstractOutlineEditPart {
 		List<ERTable> list = new ArrayList<ERTable>();
 
 		Category category = this.getCurrentCategory();
+		String filterText = getFilterText();
 		for (ERTable table : tableSet) {
 			if (category == null || category.contains(table)) {
+				if (filterText != null) {
+					if (table.getPhysicalName().toLowerCase().indexOf(filterText.toLowerCase()) < 0) {
+						continue;
+					}
+				}
 				list.add(table);
 			}
 		}
@@ -46,10 +53,21 @@ public class TableSetOutlineEditPart extends AbstractOutlineEditPart {
 		if (this.getDiagram().getDiagramContents().getSettings()
 				.getViewOrderBy() == Settings.VIEW_MODE_LOGICAL) {
 			Collections.sort(list, TableView.LOGICAL_NAME_COMPARATOR);
-
 		} else {
 			Collections.sort(list, TableView.PHYSICAL_NAME_COMPARATOR);
+		}
 
+		if  (filterText != null) {
+
+			Iterator<ERTable> iterator = list.iterator();
+			while (iterator.hasNext()) {
+				ERTable table = iterator.next();
+				if (table.getPhysicalName().equalsIgnoreCase(filterText)) {
+					iterator.remove();
+					list.add(0, table);
+					break;
+				}
+			}
 		}
 
 		return list;

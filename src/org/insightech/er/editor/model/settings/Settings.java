@@ -76,6 +76,8 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	private boolean suspendValidator;
 
+	private String masterDataBasePath;
+
 	public int getNotationLevel() {
 		return notationLevel;
 	}
@@ -105,6 +107,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 		this.useBezierCurve = false;
 		this.suspendValidator = false;
 		this.titleFontEm = new BigDecimal("1.5");
+		this.masterDataBasePath = "";
 	}
 
 	public boolean isCapital() {
@@ -293,6 +296,22 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	public void setExportSetting(ExportSetting exportSetting) {
 		this.exportSetting = exportSetting;
+	}
+
+	/**
+	 * masterDataBasePath‚ğæ“¾‚µ‚Ü‚·B
+	 * @return masterDataBasePath
+	 */
+	public String getMasterDataBasePath() {
+	    return masterDataBasePath;
+	}
+
+	/**
+	 * masterDataBasePath‚ğİ’è‚µ‚Ü‚·B
+	 * @param masterDataBasePath masterDataBasePath
+	 */
+	public void setMasterDataBasePath(String masterDataBasePath) {
+	    this.masterDataBasePath = masterDataBasePath;
 	}
 
 }

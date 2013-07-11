@@ -215,6 +215,7 @@ public class Activator extends AbstractUIPlugin {
 				loadImageDescriptor("icons/magnifier-zoom-actual.png"));
 		reg.put(ImageKey.DIAGRAM,
 				loadImageDescriptor("icons/diagram.png"));
+		reg.put(ImageKey.EDIT_EXCEL, loadImageDescriptor("icons/edit_excel.png"));
 	}
 
 	/**
@@ -356,17 +357,18 @@ public class Activator extends AbstractUIPlugin {
 
 	public static String showSaveDialogInternal(String filePath,
 			String[] filterExtensions) {
-		String dir = null;
-		String fileName = null;
-
-		if (filePath != null && !"".equals(filePath.trim())) {
-			File file = new File(filePath.trim());
-
-			dir = file.getParent();
-			fileName = file.getName();
-		}
 
 		InternalFileDialog fileDialog = new InternalFileDialog(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(), filePath);
+		if (fileDialog.open() == Window.OK) {
+			IPath path = fileDialog.getResourcePath();
+			return path.toString();
+		}
+		return null;
+	}
+
+	public static String showDirectoryDialogInternal(String filePath) {
+		InternalDirectoryDialog fileDialog = new InternalDirectoryDialog(PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getShell(), filePath);
 		if (fileDialog.open() == Window.OK) {
 			IPath path = fileDialog.getResourcePath();

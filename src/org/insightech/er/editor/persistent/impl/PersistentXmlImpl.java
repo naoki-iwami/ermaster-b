@@ -667,8 +667,8 @@ public class PersistentXmlImpl extends Persistent {
 		xml.append("\t<suspend_validator>")
 				.append(settings.isSuspendValidator())
 				.append("</suspend_validator>\n");
-		xml.append("\t<titleFontEm>").append(settings.getTitleFontEm().toString())
-		.append("</titleFontEm>\n");
+		xml.append("\t<titleFontEm>").append(settings.getTitleFontEm().toString()).append("</titleFontEm>\n");
+		xml.append("\t<masterDataBasePath>").append(settings.getMasterDataBasePath().toString()).append("</masterDataBasePath>\n");
 
 		xml.append(tab(this.createXML(settings.getExportSetting(), context)));
 		xml.append(tab(this.createXML(settings.getCategorySetting(), context)));

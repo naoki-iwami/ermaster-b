@@ -31,6 +31,12 @@ import org.insightech.er.editor.view.dialog.element.table.TableDialog;
 public class TableOutlineEditPart extends AbstractOutlineEditPart implements
 		DeleteableEditPart {
 
+	private boolean quickMode;
+
+	public TableOutlineEditPart(boolean quickMode) {
+		this.quickMode = quickMode;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -42,14 +48,15 @@ public class TableOutlineEditPart extends AbstractOutlineEditPart implements
 
 		Category category = this.getCurrentCategory();
 
-		for (Relation relation : table.getIncomingRelations()) {
-			if (category == null
-					|| category.contains(relation.getSource())) {
-				children.add(relation);
+		if (!quickMode) {
+			for (Relation relation : table.getIncomingRelations()) {
+				if (category == null
+						|| category.contains(relation.getSource())) {
+					children.add(relation);
+				}
 			}
+			children.addAll(table.getIndexes());
 		}
-
-		children.addAll(table.getIndexes());
 
 		return children;
 	}

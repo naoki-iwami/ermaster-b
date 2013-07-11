@@ -74,9 +74,11 @@ import org.insightech.er.editor.view.action.edit.ChangeBackgroundColorAction;
 import org.insightech.er.editor.view.action.edit.CopyAction;
 import org.insightech.er.editor.view.action.edit.DeleteWithoutUpdateAction;
 import org.insightech.er.editor.view.action.edit.EditAllAttributesAction;
+import org.insightech.er.editor.view.action.edit.EditExcelAction;
 import org.insightech.er.editor.view.action.edit.PasteAction;
 import org.insightech.er.editor.view.action.edit.SelectAllContentsAction;
 import org.insightech.er.editor.view.action.ermodel.ERModelAddAction;
+import org.insightech.er.editor.view.action.ermodel.ERModelQuickOutlineAction;
 import org.insightech.er.editor.view.action.group.GroupManageAction;
 import org.insightech.er.editor.view.action.line.DefaultLineAction;
 import org.insightech.er.editor.view.action.line.ERDiagramAlignmentAction;
@@ -129,6 +131,8 @@ import org.insightech.er.extention.ExtensionLoader;
  *
  */
 public class ERDiagramEditor extends GraphicalEditorWithPalette {
+
+	public static final String ACTION_OUTLINE = "_outline";
 
 	protected ERDiagram diagram;
 
@@ -185,6 +189,9 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 		} catch (CoreException e) {
 			Activator.showExceptionDialog(e);
 		}
+
+//		setAction(ACTION_OUTLINE, new QuickOutlineAction());
+
 	}
 
 	/**
@@ -393,6 +400,7 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 						new DeleteWithoutUpdateAction(this),
 						new SelectAllContentsAction(this),
 						new ERModelAddAction(this),
+						new ERModelQuickOutlineAction(this),
 //						new ChangeNameAction(this),
 						}));
 
@@ -412,8 +420,8 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
 		}
 
-		IAction action = registry.getAction(SearchAction.ID);
-		this.addKeyHandler(action);
+		this.addKeyHandler(registry.getAction(SearchAction.ID));
+		this.addKeyHandler(registry.getAction(ERModelQuickOutlineAction.ID));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -452,6 +460,10 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 		this.getActionRegistry().registerAction(action);
 
 		action = new ChangeBackgroundColorAction(this, this.diagram);
+		this.getActionRegistry().registerAction(action);
+		this.getSelectionActions().add(action.getId());
+
+		action = new EditExcelAction(this, this.diagram);
 		this.getActionRegistry().registerAction(action);
 		this.getSelectionActions().add(action.getId());
 
@@ -575,4 +587,5 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
 		return filePath;
 	}
+
 }

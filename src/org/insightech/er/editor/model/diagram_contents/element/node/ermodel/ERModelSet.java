@@ -1,6 +1,8 @@
 package org.insightech.er.editor.model.diagram_contents.element.node.ermodel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,13 +14,18 @@ public class ERModelSet extends AbstractModel implements Iterable<ERModel> {
 	public static final String PROPERTY_CHANGE_MODEL_SET = "ModelSet";
 
 	private List<ERModel> ermodels;
-	
+
 	public ERModelSet() {
 		ermodels = new ArrayList<ERModel>();
-		System.out.println("create ermodelset");
 	}
 
 	public Iterator<ERModel> iterator() {
+		Collections.sort(ermodels, new Comparator<ERModel>() {
+			@Override
+			public int compare(ERModel o1, ERModel o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		return ermodels.iterator();
 	}
 
@@ -61,7 +68,7 @@ public class ERModelSet extends AbstractModel implements Iterable<ERModel> {
 
 	/**
 	 * 全ビューからリレーションを削除
-	 * @param relation 
+	 * @param relation
 	 */
 	public void deleteRelation(Relation relation) {
 		for (ERModel model : ermodels) {
@@ -74,7 +81,7 @@ public class ERModelSet extends AbstractModel implements Iterable<ERModel> {
 			model.createRelation(relation);
 		}
 	}
-	
+
 
 //	public Object getModels() {
 //		return ermodels;

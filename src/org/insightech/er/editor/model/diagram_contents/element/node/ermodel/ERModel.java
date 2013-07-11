@@ -17,12 +17,12 @@ public class ERModel extends NodeElement {
 
 //	/** 親ダイアグラム */
 //	private ERDiagram diagram;
-	
+
 	private int[] defaultColor;
 
 	private String name;
 	private String description;
-	
+
 	private List<ERVirtualTable> tables;
 	private List<Note> notes;
 	private List<VGroup> groups;
@@ -33,13 +33,13 @@ public class ERModel extends NodeElement {
 		notes = new ArrayList<Note>();
 		groups = new ArrayList<VGroup>();
 	}
-	
+
 //	@Override
 //	public int getWidth() {
 //		System.out.println("getWidth =  " + super.getWidth());
 //		return super.getWidth();
 //	}
-	
+
 	/**
 	 * objectTypeを取得します。
 	 * @return objectType
@@ -47,7 +47,7 @@ public class ERModel extends NodeElement {
 	public String getObjectType() {
 	    return "ermodel";
 	}
-	
+
 //	/**
 //	 * 親ダイアグラムを取得します。
 //	 * @return 親ダイアグラム
@@ -122,7 +122,7 @@ public class ERModel extends NodeElement {
 
 //		for (ERVirtualTable table : tables) {
 //			if (table.equals(element)) {
-//				
+//
 //			}
 //		}
 	}
@@ -186,22 +186,19 @@ public class ERModel extends NodeElement {
 		if (element instanceof Note) {
 			((Note)element).setModel(this);
 		}
-//		if (! (element instanceof Note)) {
-			
-//		}
-		
+
 		int[] color = defaultColor;
 		if (color == null) {
 			color = getDiagram().getDefaultColor();
 		}
 		element.setColor(color[0], color[1], color[2]);
-		
+
 		if (getFontName() != null) {
 			element.setFontName(this.getFontName());
 		} else {
 			element.setFontName(getDiagram().getFontName());
 		}
-		
+
 		if (getFontSize() != 0) {
 			element.setFontSize(this.getFontSize());
 		} else {
@@ -262,5 +259,5 @@ public class ERModel extends NodeElement {
 		notes.remove(element);
 		this.firePropertyChange(PROPERTY_CHANGE_VTABLES, null, null);
 	}
-	
+
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.MouseWheelHandler;
 import org.eclipse.gef.MouseWheelZoomHandler;
@@ -15,8 +17,14 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.SWT;
 import org.insightech.er.editor.controller.editpart.element.ERDiagramEditPartFactory;
+import org.insightech.er.editor.controller.editpart.element.node.ERModelEditPart;
+import org.insightech.er.editor.controller.editpart.element.node.ERTableEditPart;
+import org.insightech.er.editor.controller.editpart.element.node.ERVirtualTableEditPart;
+import org.insightech.er.editor.controller.editpart.element.node.VGroupEditPart;
 import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModel;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERVirtualTable;
 import org.insightech.er.editor.view.ERDiagramGotoMarker;
 import org.insightech.er.editor.view.ERDiagramOnePopupMenuManager;
 import org.insightech.er.editor.view.action.ermodel.PlaceTableAction;
@@ -39,6 +47,14 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 			ERDiagramOutlinePage outlinePage) {
 		super(diagram, editPartFactory, zoomComboContributionItem, outlinePage);
 		this.model = model;
+	}
+
+	public DefaultEditDomain getDefaultEditDomain() {
+		return getEditDomain();
+	}
+
+	public ActionRegistry getDefaultActionRegistry() {
+		return getActionRegistry();
 	}
 
 	@Override
@@ -105,6 +121,27 @@ public class EROneDiagramEditor extends ERDiagramEditor {
 
 	public void refresh() {
 		model.changeAll();
+	}
+
+	public void reveal(ERTable table) {
+		ERModelEditPart editPart = (ERModelEditPart) getGraphicalViewer().getContents();
+		List tableParts = editPart.getChildren();
+
+		for (Object tableEditPart : tableParts) {
+			if (tableEditPart instanceof ERVirtualTableEditPart) {
+				ERVirtualTableEditPart vtableEditPart = (ERVirtualTableEditPart) tableEditPart;
+				if (((ERVirtualTable) vtableEditPart.getModel()).getRawTable().equals(table)) {
+					getGraphicalViewer().reveal(vtableEditPart);
+					return;
+				}
+			}
+			if (tableEditPart instanceof VGroupEditPart) {
+				// do nothing
+//				VGroupEditPart groupEditPart = (VGroupEditPart) tableEditPart;
+//				List children = groupEditPart.getChildren();
+//				System.out.println(children);
+			}
+		}
 	}
 
 

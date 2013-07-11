@@ -16,6 +16,12 @@ import org.insightech.er.editor.model.diagram_contents.element.node.NodeElement;
 
 public class ERDiagramOutlineEditPart extends AbstractOutlineEditPart {
 
+	private boolean quickMode;
+
+	public ERDiagramOutlineEditPart(boolean quickMode) {
+		this.quickMode = quickMode;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -25,16 +31,20 @@ public class ERDiagramOutlineEditPart extends AbstractOutlineEditPart {
 		ERDiagram diagram = (ERDiagram) this.getModel();
 		DiagramContents diagramContents = diagram.getDiagramContents();
 
-		modelChildren.add(diagramContents.getModelSet());
-//		modelChildren.add(diagramContents.getContents().getErmodelSet());
-//		modelChildren.add(diagramContents.getDictionary());
-		modelChildren.add(diagramContents.getGroups());
-		modelChildren.add(diagramContents.getContents().getTableSet());
-		modelChildren.add(diagramContents.getContents().getViewSet());
-		modelChildren.add(diagramContents.getTriggerSet());
-		modelChildren.add(diagramContents.getSequenceSet());
-//		modelChildren.add(diagramContents.getIndexSet());
-		modelChildren.add(diagramContents.getTablespaceSet());
+		if (quickMode) {
+			modelChildren.add(diagramContents.getContents().getTableSet());
+		} else {
+			modelChildren.add(diagramContents.getModelSet());
+//			modelChildren.add(diagramContents.getContents().getErmodelSet());
+//			modelChildren.add(diagramContents.getDictionary());
+			modelChildren.add(diagramContents.getGroups());
+			modelChildren.add(diagramContents.getContents().getTableSet());
+			modelChildren.add(diagramContents.getContents().getViewSet());
+			modelChildren.add(diagramContents.getTriggerSet());
+			modelChildren.add(diagramContents.getSequenceSet());
+//			modelChildren.add(diagramContents.getIndexSet());
+			modelChildren.add(diagramContents.getTablespaceSet());
+		}
 
 		return modelChildren;
 	}
@@ -48,7 +58,7 @@ public class ERDiagramOutlineEditPart extends AbstractOutlineEditPart {
 //		if (evt.getPropertyName().equals(ERModelSet.PROPERTY_CHANGE_MODEL_SET)) {
 //			Object newValue = evt.getNewValue();
 //			if (newValue != null) {
-//				
+//
 //				Set<Entry<NodeElement, EditPart>> entrySet = getModelToEditPart().entrySet();
 //				for (Entry<NodeElement, EditPart> entry : entrySet) {
 //					if (entry.getKey().equals(newValue)) {
@@ -73,17 +83,17 @@ public class ERDiagramOutlineEditPart extends AbstractOutlineEditPart {
 			part.refresh();
 		}
 	}
-	
+
 	@Override
 	public EditPart getTargetEditPart(Request request) {
 		if (request instanceof ChangeBoundsRequest) {
 			ChangeBoundsRequest breq = (ChangeBoundsRequest) request;
-			
+
 		}
 		// TODO Auto-generated method stub
 		return super.getTargetEditPart(request);
 	}
-	
+
 	private Map<NodeElement, EditPart> getModelToEditPart() {
 		Map<NodeElement, EditPart> modelToEditPart = new HashMap<NodeElement, EditPart>();
 		List children = getChildren();
@@ -94,6 +104,14 @@ public class ERDiagramOutlineEditPart extends AbstractOutlineEditPart {
 		}
 
 		return modelToEditPart;
+	}
+
+	/**
+	 * quickModeÇê›íËÇµÇ‹Ç∑ÅB
+	 * @param quickMode quickMode
+	 */
+	public void setQuickMode(boolean quickMode) {
+	    this.quickMode = quickMode;
 	}
 
 }

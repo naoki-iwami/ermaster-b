@@ -32,6 +32,7 @@ import org.insightech.er.editor.view.action.dbimport.ImportFromDBAction;
 import org.insightech.er.editor.view.action.dbimport.ImportFromFileAction;
 import org.insightech.er.editor.view.action.edit.EditAllAttributesAction;
 import org.insightech.er.editor.view.action.ermodel.ERModelAddAction;
+import org.insightech.er.editor.view.action.ermodel.ERModelQuickOutlineAction;
 import org.insightech.er.editor.view.action.ermodel.PlaceTableAction;
 import org.insightech.er.editor.view.action.ermodel.VGroupManageAction;
 import org.insightech.er.editor.view.action.line.DefaultLineAction;
@@ -132,6 +133,7 @@ public class ERDiagramOnePopupMenuManager extends MenuManager {
 		this.add(new Separator());
 
 		this.add(this.getAction(SearchAction.ID));
+		this.add(this.getAction(ERModelQuickOutlineAction.ID));
 
 		this.add(new Separator());
 

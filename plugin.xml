@@ -15,6 +15,18 @@
             id="org.insightech.er.wizard.NewDiagramWizard"
             name="%wizard.title"/>
    </extension>
+
+	<extension
+			point="org.eclipse.ui.commands">
+		<command
+				name="Quick Outline"
+				description="Quick Outline"
+				categoryId="org.eclipse.gef.category.view"
+				id="org.insightech.er.quickOutline">
+		</command>
+
+	</extension>
+
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer class="org.insightech.er.preference.PreferenceInitializer"/>
@@ -55,7 +67,7 @@
             name="%plugin.name">
       </editor>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -68,39 +80,46 @@
    </extension>
 
 	<extension point="org.eclipse.ant.core.antTasks">
-	
+
 		<antTask name="ermaster.ddl"
 			class="org.insightech.er.ant_task.DDLAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.image"
 			class="org.insightech.er.ant_task.ImageAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.reportHtml"
 			class="org.insightech.er.ant_task.HtmlReportAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-		
+
 		<antTask name="ermaster.reportExcel"
 			class="org.insightech.er.ant_task.ExcelReportAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.testdata"
 			class="org.insightech.er.ant_task.TestDataAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 	</extension>
-	
-	
-	
+
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			sequence="Ctrl+O"
+			commandId="org.insightech.er.quickOutline"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
+	</extension>
+
+
 </plugin>

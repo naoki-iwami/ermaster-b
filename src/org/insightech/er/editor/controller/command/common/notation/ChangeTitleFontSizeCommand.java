@@ -2,9 +2,12 @@ package org.insightech.er.editor.controller.command.common.notation;
 
 import java.math.BigDecimal;
 
+import org.eclipse.ui.IEditorPart;
 import org.insightech.er.Activator;
+import org.insightech.er.editor.EROneDiagramEditor;
 import org.insightech.er.editor.controller.command.AbstractCommand;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.settings.Settings;
 
 public class ChangeTitleFontSizeCommand extends AbstractCommand {
@@ -30,8 +33,10 @@ public class ChangeTitleFontSizeCommand extends AbstractCommand {
 	@Override
 	protected void doExecute() {
 		this.settings.setTitleFontEm(this.newCapital ? new BigDecimal("1.5") : new BigDecimal("1"));
-//		this.diagram.changeAll();
-		Activator.showMessageDialog("テーブルタイトルのフォントサイズを変更しました。\nリアルタイムで変更が反映されないので、ermファイルを保存してもう一度開き直してください。");
+
+		if (!ERModelUtil.refreshDiagram(diagram)) {
+			Activator.showMessageDialog("テーブルタイトルのフォントサイズを変更しました。\nリアルタイムで変更が反映されないので、ermファイルを保存してもう一度開き直してください。");
+		}
 	}
 
 	/**
