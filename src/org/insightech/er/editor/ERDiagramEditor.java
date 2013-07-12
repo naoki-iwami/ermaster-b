@@ -588,4 +588,14 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 		return filePath;
 	}
 
+
+
+	public DefaultEditDomain getDefaultEditDomain() {
+		return getEditDomain();
+	}
+
+	public ActionRegistry getDefaultActionRegistry() {
+		return getActionRegistry();
+	}
+
 }

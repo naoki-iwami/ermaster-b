@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorPart;
 import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.view.outline.ERDiagramOutlinePage;
@@ -105,14 +106,18 @@ public class ErDiagramInformationControl extends AbstractInformationControl {
 		treeArea.setLayout(new FillLayout());
 		treeArea.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		ERDiagramMultiPageEditor editor = (ERDiagramMultiPageEditor) ERModelUtil.getActiveEditor();
-		EROneDiagramEditor editor2 = (EROneDiagramEditor) editor.getActiveEditor();
-
-
-
 		outline = new ERDiagramOutlinePage(diagram);
 		outline.setQuickMode(true);
-		outline.setCategory(editor2.getDefaultEditDomain(), editor2.getGraphicalViewer(), null, editor2.getDefaultActionRegistry());
+
+		IEditorPart activeEditor = ((ERDiagramMultiPageEditor) ERModelUtil.getActiveEditor()).getActiveEditor();
+		if (activeEditor instanceof EROneDiagramEditor) {
+			EROneDiagramEditor editor = (EROneDiagramEditor) activeEditor;
+			outline.setCategory(editor.getDefaultEditDomain(), editor.getGraphicalViewer(), null, editor.getDefaultActionRegistry());
+		} else {
+			ERDiagramEditor editor = (ERDiagramEditor) activeEditor;
+			outline.setCategory(editor.getDefaultEditDomain(), editor.getGraphicalViewer(), null, editor.getDefaultActionRegistry());
+		}
+
 		outline.createControl(treeArea);
 		outline.update();
 

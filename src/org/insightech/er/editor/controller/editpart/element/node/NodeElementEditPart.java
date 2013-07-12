@@ -286,9 +286,8 @@ public abstract class NodeElementEditPart extends AbstractModelEditPart
 	 */
 	@Override
 	public void setSelected(int value) {
-		if (value != 0) {
-			for (Object editPartObject : this.getViewer()
-					.getSelectedEditParts()) {
+		if (value != 0 && getViewer() != null) {
+			for (Object editPartObject : this.getViewer().getSelectedEditParts()) {
 				if (editPartObject instanceof ColumnEditPart) {
 					((ColumnEditPart) editPartObject).setSelected(0);
 				}
