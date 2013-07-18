@@ -6,7 +6,6 @@ import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.parts.ScrollableThumbnail;
 import org.eclipse.gef.EditDomain;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
@@ -32,8 +31,8 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.actions.ActionFactory;
 import org.insightech.er.Activator;
+import org.insightech.er.editor.ERDiagramEditor;
 import org.insightech.er.editor.controller.command.ermodel.OpenERModelCommand;
-import org.insightech.er.editor.controller.editpart.element.node.ERTableEditPart;
 import org.insightech.er.editor.controller.editpart.outline.ERDiagramOutlineEditPart;
 import org.insightech.er.editor.controller.editpart.outline.ERDiagramOutlineEditPartFactory;
 import org.insightech.er.editor.controller.editpart.outline.ermodel.ERModelOutlineEditPart;
@@ -297,6 +296,14 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 		if (firstElement instanceof TableOutlineEditPart) {
 			Object model = ((TableOutlineEditPart)firstElement).getModel();
 			ERTable table = (ERTable) model;
+
+			if (diagram.getCurrentErmodel() == null) {
+				// 全体ビュー
+				ERDiagramEditor editor = ((ERDiagramEditor) diagram.getEditor().getActiveEditor());
+				editor.reveal(table);
+				return;
+			}
+
 			ERModel erModel = table.getDiagram().findModelByTable(table);
 			if (erModel != null) {
 
@@ -304,6 +311,7 @@ public class ERDiagramOutlinePage extends ContentOutlinePage {
 				command.setTable(table);
 				this.getViewer().getEditDomain().getCommandStack().execute(command);
 
+				// アウトラインビューの要素を選択
 				ERDiagramOutlineEditPart contents = (ERDiagramOutlineEditPart) diagram.getEditor().getOutlinePage().getViewer().getContents();
 				if (contents != null) {
 					List<ERModelOutlineEditPart> parts = ((ERModelSetOutlineEditPart) contents.getChildren().get(0)).getChildren();

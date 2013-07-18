@@ -51,9 +51,12 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.insightech.er.Activator;
 import org.insightech.er.Resources;
+import org.insightech.er.editor.controller.editpart.element.ERDiagramEditPart;
 import org.insightech.er.editor.controller.editpart.element.ERDiagramEditPartFactory;
 import org.insightech.er.editor.controller.editpart.element.PagableFreeformRootEditPart;
+import org.insightech.er.editor.controller.editpart.element.node.ERTableEditPart;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
 import org.insightech.er.editor.view.ERDiagramGotoMarker;
 import org.insightech.er.editor.view.ERDiagramPopupMenuManager;
 import org.insightech.er.editor.view.action.category.CategoryManageAction;
@@ -596,6 +599,21 @@ public class ERDiagramEditor extends GraphicalEditorWithPalette {
 
 	public ActionRegistry getDefaultActionRegistry() {
 		return getActionRegistry();
+	}
+
+	public void reveal(ERTable table) {
+		ERDiagramEditPart editPart = (ERDiagramEditPart) getGraphicalViewer().getContents();
+		List tableParts = editPart.getChildren();
+
+		for (Object tableEditPart : tableParts) {
+			if (tableEditPart instanceof ERTableEditPart) {
+				ERTableEditPart vtableEditPart = (ERTableEditPart) tableEditPart;
+				if (((ERTable) vtableEditPart.getModel()).equals(table)) {
+					getGraphicalViewer().reveal(vtableEditPart);
+					return;
+				}
+			}
+		}
 	}
 
 }
