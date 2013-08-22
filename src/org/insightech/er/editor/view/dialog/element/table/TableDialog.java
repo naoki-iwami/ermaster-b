@@ -1,7 +1,10 @@
 package org.insightech.er.editor.view.dialog.element.table;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.swt.SWT;
@@ -15,6 +18,7 @@ import org.insightech.er.common.dialog.AbstractDialog;
 import org.insightech.er.common.exception.InputException;
 import org.insightech.er.common.widgets.ValidatableTabWrapper;
 import org.insightech.er.editor.model.ERDiagram;
+import org.insightech.er.editor.model.diagram_contents.element.node.NodeSet;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
 import org.insightech.er.editor.model.diagram_contents.not_element.group.GroupSet;
 import org.insightech.er.editor.view.dialog.element.table.tab.AdvancedTabWrapper;
@@ -127,6 +131,41 @@ public class TableDialog extends AbstractDialog {
 
 	@Override
 	protected void perfomeOK() throws InputException {
+		String physicalName = copyData.getPhysicalName();
+		int prefixPos = physicalName.indexOf('_');
+		if (prefixPos < 0) {
+			return;
+		}
+
+		String  prefix = physicalName.substring(0, prefixPos + 1);
+		NodeSet nodeSet = copyData.getDiagram().getDiagramContents().getContents();
+
+		Map<MyColor, Integer> colors = new HashMap<MyColor, Integer>();
+		int sum = 0;
+		for (ERTable table : nodeSet.getTableSet()) {
+			if (table.getPhysicalName().startsWith(prefix)) {
+				MyColor mycolor = new MyColor(table.getColor());
+				if (colors.containsKey(mycolor)) {
+					Integer count = colors.get(mycolor);
+					colors.put(mycolor, count + 1);
+				} else {
+					colors.put(mycolor, 1);
+				}
+				++sum;
+			}
+		}
+
+		int[] targetColor = null;
+		for (Entry<MyColor, Integer> entry : colors.entrySet()) {
+			if (entry.getValue().intValue() >= sum - 1) {
+				targetColor = entry.getKey().getColors();
+			}
+		}
+
+		if (targetColor != null) {
+			copyData.setColor(targetColor[0], targetColor[1], targetColor[2]);
+		}
+
 	}
 
 	@Override

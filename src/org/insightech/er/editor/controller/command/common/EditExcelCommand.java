@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -54,15 +55,20 @@ public class EditExcelCommand extends AbstractCommand {
 						if (!ext.equals("xls") && !ext.equals("xlsx")) {
 							continue;
 						}
-						HSSFWorkbook book = POIUtils.readExcelBook(excelFile.getLocation().toFile());
-						for (int i = 0; i < book.getNumberOfSheets(); i++) {
-							String name = book.getSheetName(i);
-							if (name.equalsIgnoreCase(tableName)) {
-								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-								IDE.openEditor(page, (IFile)excelFile);
-								hit = true;
-								break;
+//						Activator.log(new Exception(excelFile.getLocation().toFile().toString()));
+						try {
+							HSSFWorkbook book = POIUtils.readExcelBook(excelFile.getLocation().toFile());
+							for (int i = 0; i < book.getNumberOfSheets(); i++) {
+								String name = book.getSheetName(i);
+								if (name.equalsIgnoreCase(tableName)) {
+									IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+									IDE.openEditor(page, (IFile)excelFile);
+									hit = true;
+									break;
+								}
 							}
+						} catch (Throwable e) {
+							// ‚½‚Ü‚ÉExcel‚ªŠJ‚¯‚È‚¢‚±‚Æ‚ª‚ ‚é‚ª–³Ž‹
 						}
 					}
 					if (!hit) {
@@ -72,8 +78,6 @@ public class EditExcelCommand extends AbstractCommand {
 					}
 
 				} catch (CoreException e) {
-					Activator.log(e);
-				} catch (IOException e) {
 					Activator.log(e);
 				}
 

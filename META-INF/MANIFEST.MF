@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ERMaster
 Bundle-SymbolicName: org.insightech.er; singleton:=true
-Bundle-Version: 1.4.9.2
+Bundle-Version: 1.5.0.1
 Bundle-Activator: org.insightech.er.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -28,7 +28,7 @@ Bundle-ClassPath: .,
  lib/commons-codec-1.3.jar,
  template/,
  icons/,
- lib/poi-3.7-20101029.jar
+ lib/poi-3.10-beta1.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-LazyStart: true
 Bundle-Vendor: Insightech.org

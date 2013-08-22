@@ -21,10 +21,12 @@ public class InternalFileDialog extends TitleAreaDialog implements Listener {
 	private ResourceAndContainerGroup resourceGroup;
 	private IPath fullPath;
 	private String initialFolder;
+	private String fileExtension;
 
-	protected InternalFileDialog(Shell parentShell, String initialFolder) {
+	protected InternalFileDialog(Shell parentShell, String initialFolder, String fileExtension) {
 		super(parentShell);
 		this.initialFolder = initialFolder;
+		this.fileExtension = fileExtension;
 	}
 
 	@Override
@@ -46,15 +48,15 @@ public class InternalFileDialog extends TitleAreaDialog implements Listener {
 				"File name:",
 				IDEWorkbenchMessages.WizardNewFileCreationPage_file, false,
 				250);
-		resourceGroup.setResourceExtension("sql");
+		resourceGroup.setResourceExtension(fileExtension);
 		resourceGroup.setContainerFullPath(new Path(initialFolder).removeLastSegments(1));
 
 		if (new Path(initialFolder).lastSegment() != null) {
 			resourceGroup.setResource(new Path(initialFolder).lastSegment());
+			resourceGroup.setFocus();
 		}
 
 		setTitle("File");
-
 
 //		Text text = new Text(parent, SWT.NONE);
 //		text.setText("abc");

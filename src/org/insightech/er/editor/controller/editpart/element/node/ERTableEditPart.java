@@ -83,10 +83,8 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 
 		String tableName = copyTable.getPhysicalName();
 
-		if (OracleDBManager.ID.equals(diagram.getDatabase())
-				&& !Check.isEmpty(tableName)) {
-			NormalColumn autoIncrementColumn = copyTable
-					.getAutoIncrementColumn();
+		if (OracleDBManager.ID.equals(diagram.getDatabase()) && !Check.isEmpty(tableName)) {
+			NormalColumn autoIncrementColumn = copyTable.getAutoIncrementColumn();
 
 			if (autoIncrementColumn != null) {
 				String columnName = autoIncrementColumn.getPhysicalName();
@@ -95,17 +93,12 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 					String triggerName = "TRI_" + tableName + "_" + columnName;
 					String sequenceName = "SEQ_" + tableName + "_" + columnName;
 
-					TriggerSet triggerSet = diagram.getDiagramContents()
-							.getTriggerSet();
-					SequenceSet sequenceSet = diagram.getDiagramContents()
-							.getSequenceSet();
+					TriggerSet triggerSet = diagram.getDiagramContents().getTriggerSet();
+					SequenceSet sequenceSet = diagram.getDiagramContents().getSequenceSet();
 
-					if (!triggerSet.contains(triggerName)
-							|| !sequenceSet.contains(sequenceName)) {
-						if (Activator
-								.showConfirmDialog("dialog.message.confirm.create.autoincrement.trigger")) {
+					if (!triggerSet.contains(triggerName) || !sequenceSet.contains(sequenceName)) {
+						if (Activator.showConfirmDialog("dialog.message.confirm.create.autoincrement.trigger")) {
 							if (!triggerSet.contains(triggerName)) {
-								// 繝医Μ繧ｬ繝ｼ縺ｮ菴懈�
 								Trigger trigger = new Trigger();
 								trigger.setName(triggerName);
 								trigger.setSql("BEFORE INSERT ON " + tableName
@@ -121,7 +114,6 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 							}
 
 							if (!sequenceSet.contains(sequenceName)) {
-								// 繧ｷ繝ｼ繧ｱ繝ｳ繧ｹ縺ｮ菴懈�
 								Sequence sequence = new Sequence();
 								sequence.setName(sequenceName);
 								sequence.setStart(1L);
@@ -136,34 +128,25 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 				}
 			}
 
-			NormalColumn oldAutoIncrementColumn = table
-					.getAutoIncrementColumn();
+			NormalColumn oldAutoIncrementColumn = table.getAutoIncrementColumn();
 
 			if (oldAutoIncrementColumn != null) {
 				if (autoIncrementColumn == null
-						|| ((CopyColumn) autoIncrementColumn)
-								.getOriginalColumn() != oldAutoIncrementColumn) {
+						|| ((CopyColumn) autoIncrementColumn).getOriginalColumn() != oldAutoIncrementColumn) {
 					String oldTableName = table.getPhysicalName();
 					String columnName = oldAutoIncrementColumn
 							.getPhysicalName();
 
 					if (!Check.isEmpty(columnName)) {
-						String triggerName = "TRI_" + oldTableName + "_"
-								+ columnName;
-						String sequenceName = "SEQ_" + oldTableName + "_"
-								+ columnName;
+						String triggerName = "TRI_" + oldTableName + "_" + columnName;
+						String sequenceName = "SEQ_" + oldTableName + "_" + columnName;
 
-						TriggerSet triggerSet = diagram.getDiagramContents()
-								.getTriggerSet();
-						SequenceSet sequenceSet = diagram.getDiagramContents()
-								.getSequenceSet();
+						TriggerSet triggerSet = diagram.getDiagramContents().getTriggerSet();
+						SequenceSet sequenceSet = diagram.getDiagramContents().getSequenceSet();
 
-						if (triggerSet.contains(triggerName)
-								|| sequenceSet.contains(sequenceName)) {
-							if (Activator
-									.showConfirmDialog("dialog.message.confirm.remove.autoincrement.trigger")) {
+						if (triggerSet.contains(triggerName) || sequenceSet.contains(sequenceName)) {
+							if (Activator.showConfirmDialog("dialog.message.confirm.remove.autoincrement.trigger")) {
 
-								// 繝医Μ繧ｬ繝ｼ縺ｮ蜑企勁
 								Trigger trigger = triggerSet.get(triggerName);
 
 								if (trigger != null) {
@@ -172,9 +155,7 @@ public class ERTableEditPart extends TableViewEditPart implements IResizable {
 									command.add(deleteTriggerCommand);
 								}
 
-								// 繧ｷ繝ｼ繧ｱ繝ｳ繧ｹ縺ｮ菴懈�
-								Sequence sequence = sequenceSet
-										.get(sequenceName);
+								Sequence sequence = sequenceSet.get(sequenceName);
 
 								if (sequence != null) {
 									DeleteSequenceCommand deleteSequenceCommand = new DeleteSequenceCommand(

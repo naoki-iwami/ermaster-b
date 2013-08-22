@@ -87,7 +87,7 @@ public abstract class TableView extends NodeElement implements ObjectModel,
 
 	/**
 	 * description ÇéÊìæÇµÇ‹Ç∑.
-	 * 
+	 *
 	 * @return description
 	 */
 	public String getDescription() {
@@ -96,7 +96,7 @@ public abstract class TableView extends NodeElement implements ObjectModel,
 
 	/**
 	 * description Çê›íËÇµÇ‹Ç∑.
-	 * 
+	 *
 	 * @param description
 	 *            description
 	 */
@@ -111,7 +111,7 @@ public abstract class TableView extends NodeElement implements ObjectModel,
 //	public Collection<? extends Object> getIndexes() {
 //		return new ArrayList<Object>();
 //	}
-	
+
 	public TableViewProperties getTableViewProperties() {
 		return this.tableViewProperties;
 	}
@@ -262,6 +262,9 @@ public abstract class TableView extends NodeElement implements ObjectModel,
 		to.setPhysicalName(this.getPhysicalName());
 		to.setLogicalName(this.getLogicalName());
 		to.setDescription(this.getDescription());
+		if (getColor() != null) {
+			to.setColor(this.getColor()[0], this.getColor()[1], this.getColor()[2]);
+		}
 
 		for (NormalColumn toColumn : to.getNormalColumns()) {
 			dictionary.remove(toColumn);

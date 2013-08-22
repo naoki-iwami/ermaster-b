@@ -359,7 +359,7 @@ public class Activator extends AbstractUIPlugin {
 			String[] filterExtensions) {
 
 		InternalFileDialog fileDialog = new InternalFileDialog(PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getShell(), filePath);
+				.getActiveWorkbenchWindow().getShell(), filePath, filterExtensions[0].substring(1));
 		if (fileDialog.open() == Window.OK) {
 			IPath path = fileDialog.getResourcePath();
 			return path.toString();

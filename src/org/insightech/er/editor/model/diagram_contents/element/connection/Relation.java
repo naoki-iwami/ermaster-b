@@ -59,7 +59,7 @@ public class Relation extends ConnectionElement implements Comparable<Relation> 
 		this.targetYp = -1;
 
 		this.parentCardinality = "1";
-		this.childCardinality = "1..n";
+		this.childCardinality = "0..n";
 	}
 
 	public TableView getSourceTableView() {
