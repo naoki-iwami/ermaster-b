@@ -23,6 +23,10 @@ import org.insightech.er.editor.model.diagram_contents.not_element.dictionary.Ty
 import org.insightech.er.util.Check;
 import org.insightech.er.util.Format;
 
+/**
+ * @author who?
+ * @author jflute (favorite data type)
+ */
 public abstract class AbstractWordDialog extends AbstractDialog {
 
 	protected Combo typeCombo;
@@ -325,11 +329,32 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 	private void initializeTypeCombo() {
 		this.typeCombo.add("");
 
-		String database = this.diagram.getDatabase();
+		prepareFrequentlyUsedType();
 
+		String database = this.diagram.getDatabase();
 		for (String alias : SqlType.getAliasList(database)) {
 			this.typeCombo.add(alias);
 		}
+	}
+
+	protected void prepareFrequentlyUsedType() {
+		// MySQL only for now (2014/10/30)
+		// to modify excel file is very difficult so easy-way for quick fix
+		if (isDatabaseMySQL()) {
+			typeCombo.add("char(n)");
+			typeCombo.add("varchar(n)");
+			typeCombo.add("text");
+			typeCombo.add("int");
+			typeCombo.add("bitint");
+			typeCombo.add("date");
+			typeCombo.add("datetime");
+			typeCombo.add("boolean");
+			typeCombo.add("---");
+		}
+	}
+
+	protected boolean isDatabaseMySQL() {
+		return MySQLDBManager.ID.equals(diagram.getDatabase()); // for now
 	}
 
 	/**
