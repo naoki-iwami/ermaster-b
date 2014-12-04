@@ -345,7 +345,7 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 			typeCombo.add("varchar(n)");
 			typeCombo.add("text");
 			typeCombo.add("int");
-			typeCombo.add("bitint");
+			typeCombo.add("bigint");
 			typeCombo.add("date");
 			typeCombo.add("datetime");
 			typeCombo.add("boolean");
