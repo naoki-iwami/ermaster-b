@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.PlatformUI;
 import org.insightech.er.Activator;
+import org.insightech.er.db.impl.mysql.MySQLDBManager;
 import org.insightech.er.editor.model.ERModelUtil;
 import org.insightech.er.editor.model.diagram_contents.element.connection.Relation;
 import org.insightech.er.editor.model.diagram_contents.element.node.ermodel.ERModelSet;
@@ -20,6 +21,10 @@ import org.insightech.er.editor.model.diagram_contents.element.node.table.column
 import org.insightech.er.editor.model.diagram_contents.not_element.dictionary.Word;
 import org.insightech.er.editor.view.dialog.element.relation.RelationByExistingColumnsDialog;
 
+/**
+ * @author who?
+ * @author jflute
+ */
 public class CreateRelationByExistingColumnsCommand extends
 		AbstractCreateRelationCommand {
 
@@ -161,6 +166,10 @@ public class CreateRelationByExistingColumnsCommand extends
 			this.relation = new Relation(dialog.isReferenceForPK(), dialog
 					.getReferencedComplexUniqueKey(), dialog
 					.getReferencedColumn());
+			final String defaultName = prepareDefaultFKConstraintName(sourceTable, targetTable);
+			if (defaultName != null) {
+				this.relation.setName(defaultName);
+			}
 			this.referencedColumnList = dialog.getReferencedColumnList();
 			this.foreignKeyColumnList = dialog.getForeignKeyColumnList();
 
@@ -169,5 +178,27 @@ public class CreateRelationByExistingColumnsCommand extends
 		}
 
 		return true;
+	}
+
+	protected String prepareDefaultFKConstraintName(ERTable sourceTable, TableView targetTable) {
+		// MySQL only for now for quick implementation (2014/10/23)
+		if (isDatabaseMySQL(targetTable)) {
+			final String standardName = buildStandardFKConstraintName(sourceTable, targetTable);
+			final int limitLength = 64; // where do I define it?
+			return cutName(standardName, limitLength);
+		}
+		return null;
+	}
+
+	protected boolean isDatabaseMySQL(TableView targetTable) {
+		return MySQLDBManager.ID.equals(targetTable.getDiagram().getDatabase()); // for now
+	}
+
+	protected String buildStandardFKConstraintName(ERTable sourceTable, TableView targetTable) {
+		return "FK_" + targetTable.getPhysicalName() + "_" + sourceTable.getPhysicalName();
+	}
+	
+	protected String cutName(final String name, int limitLength) {
+		return name.length() > limitLength ? name.substring(0, limitLength) : name;
 	}
 }
