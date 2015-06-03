@@ -129,8 +129,20 @@ public class MySQLDDLCreator extends DDLCreator {
 			}
 		}
 
+		String constraint = Format.null2blank(normalColumn.getConstraint());
+		if ("BINARY".equalsIgnoreCase(constraint)) {
+            ddl.append(" ");
+            ddl.append(constraint);
+            constraint = "";
+        }
+
 		if (normalColumn.isNotNull()) {
 			ddl.append(" NOT NULL");
+		}
+
+		if (!"".equals(constraint)) {
+			ddl.append(" ");
+			ddl.append(constraint);
 		}
 
 		if (normalColumn.isUniqueKey()) {
@@ -139,12 +151,6 @@ public class MySQLDDLCreator extends DDLCreator {
 				ddl.append(normalColumn.getUniqueKeyName());
 			}
 			ddl.append(" UNIQUE");
-		}
-
-		String constraint = Format.null2blank(normalColumn.getConstraint());
-		if (!"".equals(constraint)) {
-			ddl.append(" ");
-			ddl.append(constraint);
 		}
 
 		if (normalColumn.isAutoIncrement()) {
